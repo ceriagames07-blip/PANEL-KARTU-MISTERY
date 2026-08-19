@@ -3,80 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KARTU MISTERY - Admin Panel</title>
+<title>KARTU MISTERY — Admin Panel</title>
 <style>
-:root{
-  --bg:#071026;--panel:#101d43;--panel2:#0b1634;--line:rgba(255,255,255,.13);
-  --text:#fff;--muted:#9eb0df;--accent:#85e8ff;--ok:#7ff0bb;--bad:#ff91aa;--warn:#ffd784;
-}
+:root{--bg:#071026;--panel:#101d43;--line:rgba(255,255,255,.13);--text:#fff;--muted:#9eb0df;--ok:#7ff0bb;--bad:#ff91aa}
 *{box-sizing:border-box}
-body{
-  margin:0;min-height:100vh;color:var(--text);font-family:Arial,Helvetica,sans-serif;
-  background:radial-gradient(circle at 50% 0,#263f8f 0,transparent 35%),linear-gradient(145deg,#071026,#15194a);
-}
-button,input,select,textarea{font:inherit}
-.wrap{width:min(1220px,94%);margin:30px auto 60px}
-.head{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
-.head h1{margin:0;font-size:28px}.head p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.55}
-.badge{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06);font-size:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.panel{
-  background:linear-gradient(180deg,rgba(18,34,78,.96),rgba(7,14,35,.98));
-  border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 22px 60px rgba(0,0,0,.28)
-}
-.panel.full{grid-column:1/-1}.panel h2{margin:0 0 5px;font-size:18px}
-.desc{color:var(--muted);font-size:12px;line-height:1.6;margin-bottom:15px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.stat{padding:16px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid var(--line)}
-.stat small{display:block;color:var(--muted);font-size:11px;margin-bottom:7px}.stat strong{font-size:24px}
-.field{margin:12px 0}.field label{display:block;font-size:12px;color:#dbe3ff;margin-bottom:7px}
-.field input,.field select,.field textarea{
-  width:100%;border:1px solid var(--line);background:#07112b;color:#fff;border-radius:12px;padding:12px 13px;outline:none
-}
-.field textarea{min-height:84px;resize:vertical}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:#7bdff9;box-shadow:0 0 0 3px rgba(123,223,249,.1)}
-.member-form{display:grid;grid-template-columns:1.3fr .7fr .7fr 1.3fr auto;gap:10px;align-items:end}
-.member-form .field{margin:0}.member-form .btn{height:44px}
-.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}.sync{background:linear-gradient(90deg,#ffe37a,#ffb36c);color:#33210b}
-.btn:hover{filter:brightness(1.06)}.btn:active{transform:scale(.98)}
-.save{background:linear-gradient(90deg,#77e4ff,#d8c6ff);color:#11215b}
-.secondary{background:#263f73;color:#fff}.danger{background:#5a2942;color:#ffd4df}.okbtn{background:#1c5b52;color:#d4fff2}
-.smallbtn{padding:7px 9px;border-radius:9px;font-size:11px}
-.member-tools{display:flex;gap:10px;justify-content:space-between;align-items:center;margin:15px 0 10px;flex-wrap:wrap}
-.member-tools input{max-width:320px;border:1px solid var(--line);background:#07112b;color:#fff;border-radius:11px;padding:10px 12px}
-.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px}
-table{width:100%;border-collapse:collapse;min-width:980px}
-th,td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;font-size:12px;vertical-align:middle}
-th{color:#b9c7ed;background:#0a1533;position:sticky;top:0}
-td{color:#eef2ff}.muted{color:var(--muted)}
-.status-pill{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:900;border:1px solid var(--line)}
-.status-pill.active{color:#bfffe2;background:rgba(72,220,158,.1)}.status-pill.inactive{color:#ffc3d0;background:rgba(255,91,130,.1)}
-.row-actions{display:flex;gap:6px;flex-wrap:wrap}
-.tier-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.tier-card{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:16px;padding:12px}
-.tier-card h3{margin:0 0 10px;font-size:13px}
-.preview{
-  aspect-ratio:.64;border-radius:13px;border:1px solid rgba(255,255,255,.18);
-  background:linear-gradient(160deg,#465d96,#15224d);overflow:hidden;margin-bottom:10px;
-  display:grid;place-items:center;color:#99a9d3;font-size:11px
-}
-.preview img{width:100%;height:100%;object-fit:cover;display:block}.preview img[src=""]{display:none}
-.prob-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.prob{padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}
-.prob h3{margin:0 0 4px;font-size:15px}
-.total{font-size:12px;margin-bottom:10px}.total.ok{color:var(--ok)}.total.bad{color:var(--bad)}
-.prob-row{display:grid;grid-template-columns:1fr 90px;align-items:center;gap:10px;margin:8px 0}
-.prob-row label{font-size:12px;color:#dce5ff}
-.prob-row input{width:100%;border:1px solid var(--line);background:#07112b;color:white;border-radius:10px;padding:9px;text-align:center}
-.actions{
-  display:flex;gap:10px;flex-wrap:wrap;position:sticky;bottom:12px;margin-top:16px;padding:12px;
-  border:1px solid var(--line);border-radius:18px;background:rgba(5,11,30,.9);backdrop-filter:blur(12px);z-index:10
-}
-.status-msg{margin-left:auto;align-self:center;font-size:12px;color:var(--muted)}
-.note{margin-top:14px;padding:13px 15px;border:1px solid rgba(255,220,130,.2);background:rgba(255,218,117,.06);border-radius:14px;color:#d8e0ff;font-size:12px;line-height:1.65}
-@media(max-width:1050px){.member-form{grid-template-columns:1fr 1fr}.member-form .wide{grid-column:1/-1}.tier-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:960px){.prob-wrap{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.panel.full{grid-column:auto}.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.tier-grid{grid-template-columns:1fr}.wrap{width:95%;margin-top:16px}.status-msg{width:100%;margin-left:0}.actions{position:static}.member-form{grid-template-columns:1fr}.member-form .wide{grid-column:auto}.stats{grid-template-columns:1fr 1fr}}
+body{margin:0;min-height:100vh;color:var(--text);font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 50% 0,#263f8f 0,transparent 35%),linear-gradient(145deg,#071026,#15194a)}
+button,input,select{font:inherit}
+.wrap{width:min(1220px,94%);margin:28px auto 60px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.head h1{margin:0;font-size:28px}.head p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.55}.badge{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06);font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.stat{padding:16px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.045)}.stat small{display:block;color:var(--muted);font-size:11px;margin-bottom:7px}.stat strong{font-size:24px}
+.panel{background:linear-gradient(180deg,rgba(18,34,78,.96),rgba(7,14,35,.98));border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 22px 60px rgba(0,0,0,.28);margin-bottom:16px}.panel h2{margin:0 0 5px;font-size:18px}.desc{color:var(--muted);font-size:12px;line-height:1.6;margin-bottom:15px}
+.field{margin:12px 0}.field label{display:block;font-size:12px;color:#dbe3ff;margin-bottom:7px}.field input,.field select{width:100%;border:1px solid var(--line);background:#07112b;color:#fff;border-radius:12px;padding:12px 13px;outline:none}.field input:focus,.field select:focus{border-color:#7bdff9;box-shadow:0 0 0 3px rgba(123,223,249,.1)}
+.member-form{display:grid;grid-template-columns:1.3fr .7fr .7fr 1.3fr auto;gap:10px;align-items:end}.member-form .field{margin:0}.member-form .btn{height:44px}
+.member-tools{display:flex;gap:10px;justify-content:space-between;align-items:center;margin:15px 0 10px;flex-wrap:wrap}.member-tools input{max-width:320px;border:1px solid var(--line);background:#07112b;color:#fff;border-radius:11px;padding:10px 12px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px}table{width:100%;border-collapse:collapse;min-width:980px}th,td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;font-size:12px;vertical-align:middle}th{color:#b9c7ed;background:#0a1533;position:sticky;top:0}td{color:#eef2ff}.muted{color:var(--muted)}
+.status-pill{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:900;border:1px solid var(--line)}.status-pill.active{color:#bfffe2;background:rgba(72,220,158,.1)}.status-pill.inactive{color:#ffc3d0;background:rgba(255,91,130,.1)}
+.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}.save{background:linear-gradient(90deg,#77e4ff,#d8c6ff);color:#11215b}.secondary{background:#263f73;color:#fff}.danger{background:#5a2942;color:#ffd4df}.okbtn{background:#1c5b52;color:#d4fff2}.smallbtn{padding:7px 9px;border-radius:9px;font-size:11px}.row-actions{display:flex;gap:6px;flex-wrap:wrap}
+.tier-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tier-card{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:16px;padding:14px}.tier-card h3{margin:0 0 10px;font-size:14px}.locked{padding:11px;border-radius:11px;background:rgba(126,229,255,.07);border:1px solid rgba(126,229,255,.18);color:#bfefff;font-size:11px;line-height:1.5;margin-bottom:10px}
+.prob-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.prob{padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}.prob h3{margin:0 0 4px;font-size:15px}.total{font-size:12px;margin-bottom:10px}.total.ok{color:var(--ok)}.total.bad{color:var(--bad)}.prob-row{display:grid;grid-template-columns:1fr 90px;align-items:center;gap:10px;margin:8px 0}.prob-row label{font-size:12px;color:#dce5ff}.prob-row input{width:100%;border:1px solid var(--line);background:#07112b;color:#fff;border-radius:10px;padding:9px;text-align:center}
+.actions{display:flex;gap:10px;flex-wrap:wrap;position:sticky;bottom:12px;margin-top:16px;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(5,11,30,.92);backdrop-filter:blur(12px);z-index:10}.status-msg{margin-left:auto;align-self:center;font-size:12px;color:var(--muted)}.note{margin-top:14px;padding:13px 15px;border:1px solid rgba(255,220,130,.2);background:rgba(255,218,117,.06);border-radius:14px;color:#d8e0ff;font-size:12px;line-height:1.65}
+@media(max-width:1050px){.member-form{grid-template-columns:1fr 1fr}.tier-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:960px){.prob-wrap{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.member-form{grid-template-columns:1fr}.tier-grid{grid-template-columns:1fr}.actions{position:static}.status-msg{width:100%;margin-left:0}.wrap{width:95%;margin-top:16px}}
 </style>
 </head>
 <body>
@@ -84,532 +33,101 @@ td{color:#eef2ff}.muted{color:var(--muted)}
   <div class="head">
     <div>
       <h1>KARTU MISTERY — ADMIN PANEL</h1>
-      <p>Daftarkan username member, atur kesempatan bermain, status akses, gambar kartu, hadiah, dan persentase hasil permainan.</p>
+      <p>Kelola username, kesempatan bermain, hadiah, dan persentase. Gambar ELITE, SPECIAL, EPICK, dan LEGEND sudah tertanam di script game.</p>
     </div>
-    <div class="badge">CONTROL PANEL</div>
+    <div class="badge">ADMIN TERPISAH</div>
   </div>
 
   <div class="stats">
     <div class="stat"><small>TOTAL MEMBER</small><strong id="statMembers">0</strong></div>
     <div class="stat"><small>MEMBER AKTIF</small><strong id="statActive">0</strong></div>
     <div class="stat"><small>TOTAL KESEMPATAN</small><strong id="statTickets">0</strong></div>
-    <div class="stat"><small>TOTAL RONDE</small><strong id="statRounds">0</strong></div>
+    <div class="stat"><small>TOTAL FINAL</small><strong id="statFinals">0</strong></div>
   </div>
 
-  <div class="grid">
-    <section class="panel full">
-      <h2>Manajemen Username & Kesempatan Bermain</h2>
-      <div class="desc">Username wajib dibuat di sini terlebih dahulu. Hanya member berstatus <b>AKTIF</b> dan masih memiliki kesempatan yang dapat login ke Panel Permainan.</div>
+  <section class="panel">
+    <h2>Kelola Member</h2>
+    <div class="desc">Username wajib dibuat dari panel ini sebelum dapat login ke permainan.</div>
+    <div class="member-form">
+      <div class="field"><label>USERNAME / ID MEMBER</label><input id="memberUsername" type="text" placeholder="contoh: KRISNAE"></div>
+      <div class="field"><label>KESEMPATAN</label><input id="memberTickets" type="number" min="0" step="1" value="1"></div>
+      <div class="field"><label>STATUS</label><select id="memberActive"><option value="true">AKTIF</option><option value="false">NONAKTIF</option></select></div>
+      <div class="field"><label>CATATAN</label><input id="memberNote" type="text" placeholder="catatan internal admin"></div>
+      <button id="saveMemberBtn" class="btn save">SIMPAN MEMBER</button>
+    </div>
+    <div class="member-tools"><input id="memberSearch" type="text" placeholder="Cari username member..."><button id="clearMemberFormBtn" class="btn secondary">RESET FORM</button></div>
+    <div class="table-wrap"><table><thead><tr><th>USERNAME</th><th>STATUS</th><th>KESEMPATAN</th><th>RONDE</th><th>FINAL</th><th>HASIL TERAKHIR</th><th>HADIAH TERAKHIR</th><th>AKTIF TERAKHIR</th><th>CATATAN</th><th>AKSI</th></tr></thead><tbody id="memberTable"></tbody></table></div>
+  </section>
 
-      <div class="member-form">
-        <div class="field">
-          <label>USERNAME / ID MEMBER</label>
-          <input id="memberUsername" type="text" placeholder="USERNAME" autocomplete="off">
-        </div>
-        <div class="field">
-          <label>KESEMPATAN</label>
-          <input id="memberTickets" type="number" min="0" step="1" value="1">
-        </div>
-        <div class="field">
-          <label>STATUS</label>
-          <select id="memberActive">
-            <option value="true">AKTIF</option>
-            <option value="false">NONAKTIF</option>
-          </select>
-        </div>
-        <div class="field wide">
-          <label>CATATAN ADMIN</label>
-          <input id="memberNote" type="text" placeholder="Opsional">
-        </div>
-        <button id="saveMemberBtn" class="btn save">SIMPAN MEMBER</button>
-      </div>
+  <section class="panel">
+    <h2>4 Jenis Kartu & Hadiah</h2>
+    <div class="desc">Tidak ada input link gambar. Gambar kartu sudah dikunci di script permainan. Admin hanya mengatur hadiah/nominal masing-masing tier.</div>
+    <div id="tierGrid" class="tier-grid"></div>
+  </section>
 
-      <div class="member-tools">
-        <input id="memberSearch" type="search" placeholder="Cari username...">
-        <div class="muted">Klik EDIT untuk mengubah data member. Tombol +1 / -1 mengubah kesempatan secara cepat.</div>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>USERNAME</th>
-              <th>KESEMPATAN</th>
-              <th>STATUS</th>
-              <th>RONDE</th>
-              <th>FINAL</th>
-              <th>HASIL TERAKHIR</th>
-              <th>AKTIVITAS TERAKHIR</th>
-              <th>CATATAN</th>
-              <th>AKSI</th>
-            </tr>
-          </thead>
-          <tbody id="memberTable"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="panel full">
-      <h2>Gambar Belakang Kartu</h2>
-      <div class="desc">Ini adalah tampilan kartu misteri sebelum diklik. Gambar belakang tidak menunjukkan ELITE, SPECIAL, EPIC, atau LEGEND. Masukkan link PNG, JPG, WebP, atau GIF milikmu.</div>
-      <div class="field">
-        <label>LINK GAMBAR BELAKANG KARTU</label>
-        <input id="backImage" type="url" placeholder="https://domain.com/card-back.png">
-      </div>
-    </section>
-
-    <section class="panel full">
-      <h2>4 Jenis Kartu & Hadiah</h2>
-      <div class="desc">Hanya ada 4 jenis kartu: ELITE, SPECIAL, EPIC, dan LEGEND. Kartu sebelum diklik tidak memiliki jenis dan hanya menampilkan gambar belakang. Jenis kartu baru muncul setelah member membuka kartu.</div>
-      <div id="tierGrid" class="tier-grid"></div>
-    </section>
-
-    <section class="panel full">
-      <h2>Persentase Kemunculan Kartu</h2>
-      <div class="desc">Setiap tahap wajib berjumlah tepat 100%. Default: ELITE paling sering pada kartu awal, SPECIAL paling dominan pada hasil akhir, EPIC 20%, dan LEGEND 5%.</div>
-      <div id="probWrap" class="prob-wrap"></div>
-    </section>
-  </div>
+  <section class="panel">
+    <h2>Persentase Random</h2>
+    <div class="desc">Masing-masing tahap wajib total 100%. Default: ELITE dominan di awal, SPECIAL dominan pada fusion/final, EPIC 20%, LEGEND 5%.</div>
+    <div id="probWrap" class="prob-wrap"></div>
+  </section>
 
   <div class="actions">
-    <button class="btn save" id="saveConfigBtn">SIMPAN PENGATURAN GAME</button>
-      <button class="btn sync" id="syncGameBtn">SIMPAN + BUKA / SINKRON PERMAINAN</button>
-    <button class="btn secondary" id="resetConfigBtn">RESET SETTING KARTU</button>
-    <button class="btn secondary" id="exportBtn">BACKUP SEMUA DATA</button>
+    <button class="btn save" id="saveConfigBtn">SIMPAN & TERAPKAN</button>
+    <button class="btn secondary" id="resetConfigBtn">RESET DEFAULT</button>
+    <button class="btn secondary" id="exportBtn">EXPORT BACKUP</button>
     <button class="btn secondary" id="importBtn">IMPORT BACKUP</button>
     <input id="importFile" type="file" accept="application/json" hidden>
-    <div id="statusMsg" class="status-msg">Panel siap digunakan.</div>
+    <div id="adminStatus" class="status-msg">Belum ada perubahan.</div>
   </div>
 
-  <div class="note">
-    <b>Alur penggunaan:</b> Admin membuat username → menentukan kesempatan dan status → member login di Panel Permainan → kartu awal tampil tertutup tanpa jenis → setelah kartu diklik baru muncul ELITE / SPECIAL / EPIC / LEGEND → setiap ronde memakai 1 kesempatan → hasil final dan aktivitas member otomatis tercatat di tabel ini.
-    <br><br>
-    <b>Penting:</b> jika kedua file sudah di-host pada <b>domain/protocol/port yang sama</b>, tombol Simpan langsung terbaca oleh permainan. Jika sedang mengetes dua file HTML lokal (<code>file://</code>), gunakan tombol <b>SIMPAN + BUKA / SINKRON PERMAINAN</b> agar gambar kartu dan data member ikut dikirim ke Game. Untuk admin dan member di perangkat berbeda, tetap diperlukan database/API backend.
-  </div>
+  <div class="note"><b>Catatan:</b> supaya Admin HTML terpisah dan Game HTML saling membaca data tanpa API, keduanya harus dibuka dari <b>origin/domain yang sama</b>. Jika dites sebagai file lokal berbeda (<code>file://</code>), browser bisa memisahkan penyimpanannya.</div>
 </div>
-
 <script>
-const STORAGE_KEY="bangBangCardConfigV1";
-const MEMBER_STORAGE_KEY="kartuMisteryMembersV1";
+const STORAGE_KEY="kartuMisteryBuiltinConfigV1";
+const MEMBER_STORAGE_KEY="kartuMisteryBuiltinMembersV1";
 const ORDER=["ELITE","SPECIAL","EPIC","LEGEND"];
-
-const DEFAULT_CONFIG={
-  backImage:"",
-  tiers:{
-    ELITE:{image:"",reward:"Rp 10.000"},
-    SPECIAL:{image:"",reward:"Rp 25.000"},
-    EPIC:{image:"",reward:"Rp 50.000"},
-    LEGEND:{image:"",reward:"Rp 100.000"}
-  },
-  weights:{
-    initial:{ELITE:50,SPECIAL:25,EPIC:20,LEGEND:5},
-    pair:{ELITE:25,SPECIAL:50,EPIC:20,LEGEND:5},
-    final:{ELITE:15,SPECIAL:60,EPIC:20,LEGEND:5}
-  }
+const DISPLAY={ELITE:"ELITE",SPECIAL:"SPECIAL",EPIC:"EPICK",LEGEND:"LEGEND"};
+const DEFAULT={
+  tiers:{ELITE:{reward:"Rp 10.000"},SPECIAL:{reward:"Rp 25.000"},EPIC:{reward:"Rp 50.000"},LEGEND:{reward:"Rp 100.000"}},
+  weights:{initial:{ELITE:50,SPECIAL:25,EPIC:20,LEGEND:5},pair:{ELITE:25,SPECIAL:50,EPIC:20,LEGEND:5},final:{ELITE:15,SPECIAL:60,EPIC:20,LEGEND:5}}
 };
-
-const LABELS={
-  initial:"Kartu Saat Dibuka",
-  pair:"Hasil Gabungan 2 Kartu",
-  final:"Kartu Final / Hadiah Akhir"
-};
-
+const LABELS={initial:"Kartu Dibuka",pair:"Hasil Fusion 2 Kartu",final:"Hasil Final"};
 function clone(v){return JSON.parse(JSON.stringify(v))}
-function merge(a,b){
-  const o=clone(a);
-  if(!b||typeof b!=="object") return o;
-  Object.keys(b).forEach(k=>{
-    o[k]=(a[k]&&typeof a[k]==="object"&&!Array.isArray(a[k])) ? merge(a[k],b[k]) : b[k];
-  });
-  return o;
-}
-function esc(v){
-  return String(v??"")
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
-}
+function esc(v){return String(v??"").replace(/[&<>\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
 function nowISO(){return new Date().toISOString()}
-function formatDate(v){
-  if(!v) return "-";
-  const d=new Date(v);
-  return Number.isNaN(d.getTime())?"-":d.toLocaleString("id-ID");
-}
-function setMessage(text,type=""){
-  const el=document.getElementById("statusMsg");
-  el.textContent=text;
-  el.style.color=type==="ok"?"#7ff0bb":type==="bad"?"#ff91aa":"#9eb0df";
-}
-
+function formatTime(v){if(!v)return"-";const d=new Date(v);return isNaN(d)?"-":d.toLocaleString('id-ID')}
 function loadConfig(){
-  try{return merge(DEFAULT_CONFIG,JSON.parse(localStorage.getItem(STORAGE_KEY)||"null")||{})}
-  catch(e){return clone(DEFAULT_CONFIG)}
-}
-function saveConfigData(data){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}
-function loadMembers(){
   try{
-    const data=JSON.parse(localStorage.getItem(MEMBER_STORAGE_KEY)||"{}");
-    return data && typeof data==="object" ? data : {};
-  }catch(e){return {}}
+    const raw=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null")||{};
+    const out=clone(DEFAULT);
+    ORDER.forEach(t=>{if(raw.tiers?.[t]?.reward!=null)out.tiers[t].reward=String(raw.tiers[t].reward)});
+    ["initial","pair","final"].forEach(s=>ORDER.forEach(t=>{const v=Number(raw.weights?.[s]?.[t]);if(Number.isFinite(v)&&v>=0)out.weights[s][t]=v}));
+    return out;
+  }catch(e){return clone(DEFAULT)}
 }
-function saveMembers(data){
-  localStorage.setItem(MEMBER_STORAGE_KEY,JSON.stringify(data||{}));
-}
-
-let config=loadConfig();
+function saveConfig(v){localStorage.setItem(STORAGE_KEY,JSON.stringify(v))}
+function loadMembers(){try{return JSON.parse(localStorage.getItem(MEMBER_STORAGE_KEY)||"{}")||{}}catch(e){return{}}}
+function saveMembers(v){localStorage.setItem(MEMBER_STORAGE_KEY,JSON.stringify(v))}
 let editingId=null;
-
-const tierGrid=document.getElementById("tierGrid");
-const probWrap=document.getElementById("probWrap");
-
-function tierCard(name){
-  return `<div class="tier-card">
-    <h3>${name}</h3>
-    <div class="preview">
-      <img id="preview-${name}" src="" alt="${name}">
-      <span id="empty-${name}">PREVIEW KARTU</span>
-    </div>
-    <div class="field">
-      <label>LINK GAMBAR ${name}</label>
-      <input class="tier-image" data-tier="${name}" type="url" placeholder="https://.../${name.toLowerCase()}.png">
-    </div>
-    <div class="field">
-      <label>HADIAH / NOMINAL FINAL</label>
-      <input class="tier-reward" data-tier="${name}" type="text" placeholder="Rp 10.000">
-    </div>
-  </div>`;
-}
-
-function probBox(stage){
-  return `<div class="prob" data-stage="${stage}">
-    <h3>${LABELS[stage]}</h3>
-    <div class="total" id="total-${stage}">TOTAL: 0%</div>
-    ${ORDER.map(name=>`
-      <div class="prob-row">
-        <label>${name}</label>
-        <input class="weight" data-stage="${stage}" data-tier="${name}" type="number" min="0" max="100" step="1">
-      </div>`).join("")}
-  </div>`;
-}
-
-tierGrid.innerHTML=ORDER.map(tierCard).join("");
-probWrap.innerHTML=["initial","pair","final"].map(probBox).join("");
-
-function updatePreview(name,url){
-  const img=document.getElementById(`preview-${name}`);
-  const empty=document.getElementById(`empty-${name}`);
-  const clean=String(url||"").trim();
-  img.referrerPolicy="no-referrer";
-  img.onload=()=>{
-    empty.textContent="PREVIEW KARTU";
-    empty.style.display="none";
-    img.style.display="block";
-  };
-  img.onerror=()=>{
-    img.style.display="none";
-    empty.textContent="LINK GAMBAR TIDAK BISA DIMUAT";
-    empty.style.display="block";
-  };
-  if(!clean){
-    img.removeAttribute("src");
-    img.style.display="none";
-    empty.textContent="PREVIEW KARTU";
-    empty.style.display="block";
-    return;
-  }
-  img.style.display="block";
-  img.src=clean;
-}
-
-function updateTotal(stage){
-  const inputs=[...document.querySelectorAll(`.weight[data-stage="${stage}"]`)];
-  const total=inputs.reduce((s,i)=>s+(Number(i.value)||0),0);
-  const el=document.getElementById(`total-${stage}`);
-  el.textContent=`TOTAL: ${total}%`;
-  el.className="total "+(total===100?"ok":"bad");
-  return total;
-}
-
-function renderConfig(){
-  document.getElementById("backImage").value=config.backImage||"";
-  ORDER.forEach(name=>{
-    const image=document.querySelector(`.tier-image[data-tier="${name}"]`);
-    const reward=document.querySelector(`.tier-reward[data-tier="${name}"]`);
-    image.value=config.tiers[name]?.image||"";
-    reward.value=config.tiers[name]?.reward||"";
-    updatePreview(name,image.value);
-  });
-  ["initial","pair","final"].forEach(stage=>{
-    ORDER.forEach(name=>{
-      document.querySelector(`.weight[data-stage="${stage}"][data-tier="${name}"]`).value=
-        Number(config.weights[stage]?.[name]||0);
-    });
-    updateTotal(stage);
-  });
-}
-
-function collectConfig(){
-  const next=clone(DEFAULT_CONFIG);
-  next.backImage=document.getElementById("backImage").value.trim();
-  ORDER.forEach(name=>{
-    next.tiers[name].image=document.querySelector(`.tier-image[data-tier="${name}"]`).value.trim();
-    next.tiers[name].reward=document.querySelector(`.tier-reward[data-tier="${name}"]`).value.trim()||"-";
-  });
-  ["initial","pair","final"].forEach(stage=>{
-    ORDER.forEach(name=>{
-      next.weights[stage][name]=Math.max(
-        0,
-        Number(document.querySelector(`.weight[data-stage="${stage}"][data-tier="${name}"]`).value)||0
-      );
-    });
-  });
-  return next;
-}
-
-function encodeSyncPayload(payload){
-  return btoa(encodeURIComponent(JSON.stringify(payload)));
-}
-
-function openSyncedGame(){
-  const totals=["initial","pair","final"].map(updateTotal);
-  if(totals.some(v=>v!==100)){
-    setMessage("Gagal sinkron: total persentase setiap tahap harus tepat 100%.","bad");
-    return;
-  }
-  config=collectConfig();
-  saveConfigData(config);
-  const payload={config,members:loadMembers(),syncedAt:nowISO()};
-  const target=new URL("01-panel-permainan-kartu-mistery.html",location.href);
-  target.hash="sync="+encodeURIComponent(encodeSyncPayload(payload));
-  window.open(target.href,"_blank");
-  setMessage("Setting disimpan dan dikirim ke Panel Permainan.","ok");
-}
-
-function updateStats(){
-  const members=loadMembers();
-  const rows=Object.values(members);
-  document.getElementById("statMembers").textContent=rows.length;
-  document.getElementById("statActive").textContent=rows.filter(m=>m.active!==false).length;
-  document.getElementById("statTickets").textContent=rows.reduce((s,m)=>s+(Math.max(0,Number(m.tickets)||0)),0);
-  document.getElementById("statRounds").textContent=rows.reduce((s,m)=>s+(Math.max(0,Number(m.rounds)||0)),0);
-}
-
-function clearMemberForm(){
-  editingId=null;
-  document.getElementById("memberUsername").value="";
-  document.getElementById("memberUsername").disabled=false;
-  document.getElementById("memberTickets").value="1";
-  document.getElementById("memberActive").value="true";
-  document.getElementById("memberNote").value="";
-  document.getElementById("saveMemberBtn").textContent="SIMPAN MEMBER";
-}
-
-function renderMembers(){
-  const members=loadMembers();
-  const q=document.getElementById("memberSearch").value.trim().toUpperCase();
-  const entries=Object.entries(members)
-    .filter(([id,m])=>!q || id.includes(q) || String(m.note||"").toUpperCase().includes(q))
-    .sort((a,b)=>a[0].localeCompare(b[0]));
-
-  const tbody=document.getElementById("memberTable");
-  if(!entries.length){
-    tbody.innerHTML=`<tr><td colspan="9" class="muted">Belum ada member yang terdaftar.</td></tr>`;
-    updateStats();
-    return;
-  }
-
-  tbody.innerHTML=entries.map(([id,m])=>{
-    const active=m.active!==false;
-    const lastResult=m.lastTier ? `${esc(m.lastTier)} • ${esc(m.lastReward||"-")}` : "-";
-    return `<tr>
-      <td><b>${esc(id)}</b></td>
-      <td><b>${Math.max(0,Number(m.tickets)||0)}</b></td>
-      <td><span class="status-pill ${active?"active":"inactive"}">${active?"AKTIF":"NONAKTIF"}</span></td>
-      <td>${Math.max(0,Number(m.rounds)||0)}</td>
-      <td>${Math.max(0,Number(m.finalCount)||0)}</td>
-      <td>${lastResult}</td>
-      <td>${esc(formatDate(m.lastActive))}</td>
-      <td>${esc(m.note||"-")}</td>
-      <td>
-        <div class="row-actions">
-          <button class="btn secondary smallbtn" data-action="edit" data-id="${esc(id)}">EDIT</button>
-          <button class="btn okbtn smallbtn" data-action="plus" data-id="${esc(id)}">+1</button>
-          <button class="btn secondary smallbtn" data-action="minus" data-id="${esc(id)}">-1</button>
-          <button class="btn secondary smallbtn" data-action="toggle" data-id="${esc(id)}">${active?"NONAKTIFKAN":"AKTIFKAN"}</button>
-          <button class="btn danger smallbtn" data-action="delete" data-id="${esc(id)}">HAPUS</button>
-        </div>
-      </td>
-    </tr>`;
-  }).join("");
-
-  updateStats();
-}
-
-document.getElementById("saveMemberBtn").addEventListener("click",()=>{
-  const id=document.getElementById("memberUsername").value.trim().toUpperCase().replace(/\s+/g,"");
-  const tickets=Math.max(0,Math.floor(Number(document.getElementById("memberTickets").value)||0));
-  const active=document.getElementById("memberActive").value==="true";
-  const note=document.getElementById("memberNote").value.trim();
-
-  if(!id){
-    setMessage("Gagal: username wajib diisi.","bad");
-    return;
-  }
-
-  const members=loadMembers();
-  const old=members[id]||{};
-  members[id]={
-    tickets,
-    active,
-    note,
-    rounds:Number(old.rounds)||0,
-    finalCount:Number(old.finalCount)||0,
-    lastTier:old.lastTier||"",
-    lastReward:old.lastReward||"",
-    lastActive:old.lastActive||"",
-    createdAt:old.createdAt||nowISO(),
-    updatedAt:nowISO()
-  };
-  saveMembers(members);
-  setMessage(editingId ? `Data ${id} berhasil diperbarui.` : `Username ${id} berhasil didaftarkan.`,"ok");
-  clearMemberForm();
-  renderMembers();
-});
-
-document.getElementById("memberTable").addEventListener("click",e=>{
-  const btn=e.target.closest("button[data-action]");
-  if(!btn)return;
-
-  const action=btn.dataset.action;
-  const id=btn.dataset.id;
-  const members=loadMembers();
-  const member=members[id];
-  if(!member)return;
-
-  if(action==="edit"){
-    editingId=id;
-    document.getElementById("memberUsername").value=id;
-    document.getElementById("memberUsername").disabled=true;
-    document.getElementById("memberTickets").value=Math.max(0,Number(member.tickets)||0);
-    document.getElementById("memberActive").value=member.active===false?"false":"true";
-    document.getElementById("memberNote").value=member.note||"";
-    document.getElementById("saveMemberBtn").textContent="UPDATE MEMBER";
-    setMessage(`Sedang mengedit ${id}.`);
-    return;
-  }
-
-  if(action==="plus"){
-    member.tickets=Math.max(0,Number(member.tickets)||0)+1;
-    member.updatedAt=nowISO();
-    saveMembers(members);
-    setMessage(`+1 kesempatan ditambahkan ke ${id}.`,"ok");
-  }
-
-  if(action==="minus"){
-    member.tickets=Math.max(0,(Number(member.tickets)||0)-1);
-    member.updatedAt=nowISO();
-    saveMembers(members);
-    setMessage(`Kesempatan ${id} dikurangi 1.`,"ok");
-  }
-
-  if(action==="toggle"){
-    member.active=member.active===false;
-    member.updatedAt=nowISO();
-    saveMembers(members);
-    setMessage(`Status ${id} diubah menjadi ${member.active?"AKTIF":"NONAKTIF"}.`,"ok");
-  }
-
-  if(action==="delete"){
-    if(!confirm(`Hapus username ${id}?`))return;
-    delete members[id];
-    saveMembers(members);
-    if(editingId===id)clearMemberForm();
-    setMessage(`Username ${id} berhasil dihapus.`,"ok");
-  }
-
-  renderMembers();
-});
-
-document.getElementById("memberSearch").addEventListener("input",renderMembers);
-
-document.addEventListener("input",e=>{
-  if(e.target.classList.contains("tier-image")) updatePreview(e.target.dataset.tier,e.target.value.trim());
-  if(e.target.classList.contains("weight")) updateTotal(e.target.dataset.stage);
-  if(e.target.closest(".panel") && !e.target.closest(".member-form") && e.target.id!=="memberSearch"){
-    setMessage("Ada perubahan pengaturan game yang belum disimpan.");
-  }
-});
-
-document.getElementById("saveConfigBtn").addEventListener("click",()=>{
-  const totals=["initial","pair","final"].map(updateTotal);
-  if(totals.some(v=>v!==100)){
-    setMessage("Gagal: total persentase pada setiap tahap harus tepat 100%.","bad");
-    return;
-  }
-  config=collectConfig();
-  saveConfigData(config);
-  setMessage("Pengaturan game tersimpan. Ronde berikutnya akan memakai setting terbaru.","ok");
-});
-
-const syncBtn=document.getElementById("syncGameBtn");
-if(syncBtn) syncBtn.addEventListener("click",openSyncedGame);
-
-document.getElementById("resetConfigBtn").addEventListener("click",()=>{
-  if(!confirm("Kembalikan gambar, hadiah, dan persentase kartu ke setting default?"))return;
-  config=clone(DEFAULT_CONFIG);
-  saveConfigData(config);
-  renderConfig();
-  setMessage("Pengaturan kartu dikembalikan ke default. Data member tidak dihapus.","ok");
-});
-
-document.getElementById("exportBtn").addEventListener("click",()=>{
-  const data={
-    exportedAt:nowISO(),
-    config:collectConfig(),
-    members:loadMembers()
-  };
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="kartu-mistery-backup.json";
-  a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),500);
-  setMessage("Backup semua data berhasil dibuat.","ok");
-});
-
-document.getElementById("importBtn").addEventListener("click",()=>document.getElementById("importFile").click());
-
-document.getElementById("importFile").addEventListener("change",async e=>{
-  const file=e.target.files[0];
-  if(!file)return;
-  try{
-    const data=JSON.parse(await file.text());
-    if(data.config){
-      config=merge(DEFAULT_CONFIG,data.config);
-      saveConfigData(config);
-    }else{
-      config=merge(DEFAULT_CONFIG,data);
-      saveConfigData(config);
-    }
-    if(data.members && typeof data.members==="object") saveMembers(data.members);
-    renderConfig();
-    renderMembers();
-    setMessage("Backup berhasil di-import.","ok");
-  }catch(err){
-    setMessage("File backup tidak valid.","bad");
-  }
-  e.target.value="";
-});
-
-window.addEventListener("storage",e=>{
-  if(e.key===MEMBER_STORAGE_KEY) renderMembers();
-  if(e.key===STORAGE_KEY){
-    config=loadConfig();
-    renderConfig();
-  }
-});
-
-renderConfig();
-renderMembers();
+const tierGrid=document.getElementById('tierGrid');
+const probWrap=document.getElementById('probWrap');
+const adminStatus=document.getElementById('adminStatus');
+function setMsg(t,k=''){adminStatus.textContent=t;adminStatus.style.color=k==='ok'?'#7ff0bb':k==='bad'?'#ff91aa':'#9eb0df'}
+function updateStats(){const m=loadMembers();const ids=Object.keys(m);let active=0,tickets=0,finals=0;ids.forEach(id=>{const x=m[id]||{};if(x.active!==false)active++;tickets+=Math.max(0,Number(x.tickets)||0);finals+=Number(x.finalCount)||0});document.getElementById('statMembers').textContent=ids.length;document.getElementById('statActive').textContent=active;document.getElementById('statTickets').textContent=tickets;document.getElementById('statFinals').textContent=finals}
+function clearMemberForm(){editingId=null;memberUsername.value='';memberUsername.disabled=false;memberTickets.value='1';memberActive.value='true';memberNote.value='';saveMemberBtn.textContent='SIMPAN MEMBER'}
+function renderMembers(){const members=loadMembers();const q=memberSearch.value.trim().toUpperCase();const rows=Object.keys(members).sort().filter(id=>!q||id.includes(q)).map(id=>{const m=members[id]||{};const active=m.active!==false;return `<tr><td><strong>${esc(id)}</strong></td><td><span class="status-pill ${active?'active':'inactive'}">${active?'AKTIF':'NONAKTIF'}</span></td><td>${Math.max(0,Number(m.tickets)||0)}</td><td>${Number(m.rounds)||0}</td><td>${Number(m.finalCount)||0}</td><td>${esc(m.lastTier||'-')}</td><td>${esc(m.lastReward||'-')}</td><td>${esc(formatTime(m.lastActive))}</td><td class="muted">${esc(m.note||'-')}</td><td><div class="row-actions"><button class="btn secondary smallbtn" data-action="edit" data-id="${esc(id)}">EDIT</button><button class="btn okbtn smallbtn" data-action="plus" data-id="${esc(id)}">+1</button><button class="btn secondary smallbtn" data-action="minus" data-id="${esc(id)}">-1</button><button class="btn secondary smallbtn" data-action="toggle" data-id="${esc(id)}">${active?'NONAKTIFKAN':'AKTIFKAN'}</button><button class="btn danger smallbtn" data-action="delete" data-id="${esc(id)}">HAPUS</button></div></td></tr>`}).join('');memberTable.innerHTML=rows||'<tr><td colspan="10" class="muted">Belum ada member terdaftar.</td></tr>';updateStats()}
+function renderConfig(){const c=loadConfig();tierGrid.innerHTML=ORDER.map(t=>`<div class="tier-card"><h3>${DISPLAY[t]}</h3><div class="locked">🔒 Gambar kartu sudah tertanam di script game.</div><div class="field"><label>HADIAH / NOMINAL</label><input class="tier-reward" data-tier="${t}" type="text" value="${esc(c.tiers[t].reward)}"></div></div>`).join('');probWrap.innerHTML=['initial','pair','final'].map(s=>`<div class="prob"><h3>${LABELS[s]}</h3><div class="total" id="total-${s}">TOTAL: 0%</div>${ORDER.map(t=>`<div class="prob-row"><label>${DISPLAY[t]}</label><input class="weight" data-stage="${s}" data-tier="${t}" type="number" min="0" max="100" step="1" value="${c.weights[s][t]}"></div>`).join('')}</div>`).join('');['initial','pair','final'].forEach(updateTotal)}
+function updateTotal(s){const total=[...document.querySelectorAll(`.weight[data-stage="${s}"]`)].reduce((a,i)=>a+(Number(i.value)||0),0);const el=document.getElementById(`total-${s}`);el.textContent=`TOTAL: ${total}%`;el.className='total '+(total===100?'ok':'bad');return total}
+function collectConfig(){const c=clone(DEFAULT);ORDER.forEach(t=>c.tiers[t].reward=document.querySelector(`.tier-reward[data-tier="${t}"]`).value.trim()||'-');['initial','pair','final'].forEach(s=>ORDER.forEach(t=>c.weights[s][t]=Math.max(0,Number(document.querySelector(`.weight[data-stage="${s}"][data-tier="${t}"]`).value)||0)));return c}
+saveMemberBtn.addEventListener('click',()=>{const id=memberUsername.value.trim().toUpperCase().replace(/\s+/g,'');if(!id){setMsg('Gagal: username wajib diisi.','bad');return}const members=loadMembers();const old=members[id]||{};members[id]={tickets:Math.max(0,Math.floor(Number(memberTickets.value)||0)),active:memberActive.value==='true',note:memberNote.value.trim(),rounds:Number(old.rounds)||0,finalCount:Number(old.finalCount)||0,lastTier:old.lastTier||'',lastReward:old.lastReward||'',lastActive:old.lastActive||'',createdAt:old.createdAt||nowISO(),updatedAt:nowISO()};saveMembers(members);setMsg(editingId?`Data ${id} berhasil diperbarui.`:`Username ${id} berhasil didaftarkan.`,'ok');clearMemberForm();renderMembers()})
+memberTable.addEventListener('click',e=>{const b=e.target.closest('button[data-action]');if(!b)return;const id=b.dataset.id,a=b.dataset.action,members=loadMembers(),m=members[id];if(!m)return;if(a==='edit'){editingId=id;memberUsername.value=id;memberUsername.disabled=true;memberTickets.value=Math.max(0,Number(m.tickets)||0);memberActive.value=m.active===false?'false':'true';memberNote.value=m.note||'';saveMemberBtn.textContent='UPDATE MEMBER';return}if(a==='plus')m.tickets=Math.max(0,Number(m.tickets)||0)+1;if(a==='minus')m.tickets=Math.max(0,(Number(m.tickets)||0)-1);if(a==='toggle')m.active=m.active===false;if(a==='delete'){if(!confirm(`Hapus username ${id}?`))return;delete members[id]}else m.updatedAt=nowISO();saveMembers(members);renderMembers();setMsg('Data member berhasil diperbarui.','ok')})
+memberSearch.addEventListener('input',renderMembers);clearMemberFormBtn.addEventListener('click',clearMemberForm);
+document.addEventListener('input',e=>{if(e.target.classList.contains('weight'))updateTotal(e.target.dataset.stage)});
+saveConfigBtn.addEventListener('click',()=>{const totals=['initial','pair','final'].map(updateTotal);if(totals.some(v=>v!==100)){setMsg('Gagal: semua total persentase harus tepat 100%.','bad');return}saveConfig(collectConfig());setMsg('Pengaturan tersimpan. Game akan membaca setting terbaru.','ok')});
+resetConfigBtn.addEventListener('click',()=>{if(!confirm('Reset hadiah dan persentase ke default?'))return;saveConfig(clone(DEFAULT));renderConfig();setMsg('Pengaturan dikembalikan ke default.','ok')});
+exportBtn.addEventListener('click',()=>{const data={exportedAt:nowISO(),config:collectConfig(),members:loadMembers()};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kartu-mistery-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)});
+importBtn.addEventListener('click',()=>importFile.click());importFile.addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.config)saveConfig(d.config);if(d.members&&typeof d.members==='object')saveMembers(d.members);renderConfig();renderMembers();setMsg('Backup berhasil di-import.','ok')}catch(err){setMsg('File backup tidak valid.','bad')}e.target.value=''});
+renderConfig();renderMembers();
 </script>
 </body>
 </html>
