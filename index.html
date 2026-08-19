@@ -37,7 +37,7 @@ button,input,select,textarea{font:inherit}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:#7bdff9;box-shadow:0 0 0 3px rgba(123,223,249,.1)}
 .member-form{display:grid;grid-template-columns:1.3fr .7fr .7fr 1.3fr auto;gap:10px;align-items:end}
 .member-form .field{margin:0}.member-form .btn{height:44px}
-.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}
+.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}.sync{background:linear-gradient(90deg,#ffe37a,#ffb36c);color:#33210b}
 .btn:hover{filter:brightness(1.06)}.btn:active{transform:scale(.98)}
 .save{background:linear-gradient(90deg,#77e4ff,#d8c6ff);color:#11215b}
 .secondary{background:#263f73;color:#fff}.danger{background:#5a2942;color:#ffd4df}.okbtn{background:#1c5b52;color:#d4fff2}
@@ -173,6 +173,7 @@ td{color:#eef2ff}.muted{color:var(--muted)}
 
   <div class="actions">
     <button class="btn save" id="saveConfigBtn">SIMPAN PENGATURAN GAME</button>
+      <button class="btn sync" id="syncGameBtn">SIMPAN + BUKA / SINKRON PERMAINAN</button>
     <button class="btn secondary" id="resetConfigBtn">RESET SETTING KARTU</button>
     <button class="btn secondary" id="exportBtn">BACKUP SEMUA DATA</button>
     <button class="btn secondary" id="importBtn">IMPORT BACKUP</button>
@@ -183,7 +184,7 @@ td{color:#eef2ff}.muted{color:var(--muted)}
   <div class="note">
     <b>Alur penggunaan:</b> Admin membuat username → menentukan kesempatan dan status → member login di Panel Permainan → kartu awal tampil tertutup tanpa jenis → setelah kartu diklik baru muncul ELITE / SPECIAL / EPIC / LEGEND → setiap ronde memakai 1 kesempatan → hasil final dan aktivitas member otomatis tercatat di tabel ini.
     <br><br>
-    <b>Penting:</b> versi HTML ini memakai <code>localStorage</code>. Panel Permainan dan Admin Panel harus dibuka pada <b>domain/protocol/port yang sama</b> agar data saling terbaca. Untuk admin dan member di perangkat berbeda, gunakan database/API backend.
+    <b>Penting:</b> jika kedua file sudah di-host pada <b>domain/protocol/port yang sama</b>, tombol Simpan langsung terbaca oleh permainan. Jika sedang mengetes dua file HTML lokal (<code>file://</code>), gunakan tombol <b>SIMPAN + BUKA / SINKRON PERMAINAN</b> agar gambar kartu dan data member ikut dikirim ke Game. Untuk admin dan member di perangkat berbeda, tetap diperlukan database/API backend.
   </div>
 </div>
 
@@ -296,8 +297,27 @@ probWrap.innerHTML=["initial","pair","final"].map(probBox).join("");
 function updatePreview(name,url){
   const img=document.getElementById(`preview-${name}`);
   const empty=document.getElementById(`empty-${name}`);
-  img.src=url||"";
-  empty.style.display=url?"none":"block";
+  const clean=String(url||"").trim();
+  img.referrerPolicy="no-referrer";
+  img.onload=()=>{
+    empty.textContent="PREVIEW KARTU";
+    empty.style.display="none";
+    img.style.display="block";
+  };
+  img.onerror=()=>{
+    img.style.display="none";
+    empty.textContent="LINK GAMBAR TIDAK BISA DIMUAT";
+    empty.style.display="block";
+  };
+  if(!clean){
+    img.removeAttribute("src");
+    img.style.display="none";
+    empty.textContent="PREVIEW KARTU";
+    empty.style.display="block";
+    return;
+  }
+  img.style.display="block";
+  img.src=clean;
 }
 
 function updateTotal(stage){
@@ -343,6 +363,25 @@ function collectConfig(){
     });
   });
   return next;
+}
+
+function encodeSyncPayload(payload){
+  return btoa(encodeURIComponent(JSON.stringify(payload)));
+}
+
+function openSyncedGame(){
+  const totals=["initial","pair","final"].map(updateTotal);
+  if(totals.some(v=>v!==100)){
+    setMessage("Gagal sinkron: total persentase setiap tahap harus tepat 100%.","bad");
+    return;
+  }
+  config=collectConfig();
+  saveConfigData(config);
+  const payload={config,members:loadMembers(),syncedAt:nowISO()};
+  const target=new URL("01-panel-permainan-kartu-mistery.html",location.href);
+  target.hash="sync="+encodeURIComponent(encodeSyncPayload(payload));
+  window.open(target.href,"_blank");
+  setMessage("Setting disimpan dan dikirim ke Panel Permainan.","ok");
 }
 
 function updateStats(){
@@ -510,6 +549,9 @@ document.getElementById("saveConfigBtn").addEventListener("click",()=>{
   saveConfigData(config);
   setMessage("Pengaturan game tersimpan. Ronde berikutnya akan memakai setting terbaru.","ok");
 });
+
+const syncBtn=document.getElementById("syncGameBtn");
+if(syncBtn) syncBtn.addEventListener("click",openSyncedGame);
 
 document.getElementById("resetConfigBtn").addEventListener("click",()=>{
   if(!confirm("Kembalikan gambar, hadiah, dan persentase kartu ke setting default?"))return;
