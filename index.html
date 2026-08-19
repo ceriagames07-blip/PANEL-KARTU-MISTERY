@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bang Bang Card - Admin Panel</title>
+<style>
+:root{--bg:#071026;--panel:#101d43;--panel2:#0b1634;--line:rgba(255,255,255,.13);--text:#fff;--muted:#9eb0df;--accent:#85e8ff;--ok:#7ff0bb;--bad:#ff91aa}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#263f8f 0,transparent 35%),linear-gradient(145deg,#071026,#15194a);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{width:min(1180px,94%);margin:30px auto 60px}.head{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px;flex-wrap:wrap}.head h1{margin:0;font-size:28px}.head p{margin:5px 0 0;color:var(--muted);font-size:13px}.badge{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06);font-size:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:linear-gradient(180deg,rgba(18,34,78,.96),rgba(7,14,35,.98));border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 22px 60px rgba(0,0,0,.28)}.panel.full{grid-column:1/-1}.panel h2{margin:0 0 5px;font-size:18px}.desc{color:var(--muted);font-size:12px;line-height:1.55;margin-bottom:15px}.field{margin:12px 0}.field label{display:block;font-size:12px;color:#dbe3ff;margin-bottom:7px}.field input{width:100%;border:1px solid var(--line);background:#07112b;color:white;border-radius:12px;padding:12px 13px;outline:none}.field input:focus{border-color:#7bdff9;box-shadow:0 0 0 3px rgba(123,223,249,.1)}
+.tier-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.tier-card{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:16px;padding:12px}.tier-card h3{margin:0 0 10px;font-size:13px}.preview{aspect-ratio:.64;border-radius:13px;border:1px solid rgba(255,255,255,.18);background:linear-gradient(160deg,#465d96,#15224d);overflow:hidden;margin-bottom:10px;display:grid;place-items:center;color:#99a9d3;font-size:11px}.preview img{width:100%;height:100%;object-fit:cover;display:block}.preview img[src=""]{display:none}
+.prob-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.prob{padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}.prob h3{margin:0 0 4px;font-size:15px}.total{font-size:12px;margin-bottom:10px}.total.ok{color:var(--ok)}.total.bad{color:var(--bad)}.prob-row{display:grid;grid-template-columns:1fr 90px;align-items:center;gap:10px;margin:8px 0}.prob-row label{font-size:12px;color:#dce5ff}.prob-row input{width:100%;border:1px solid var(--line);background:#07112b;color:white;border-radius:10px;padding:9px;text-align:center}.actions{display:flex;gap:10px;flex-wrap:wrap;position:sticky;bottom:12px;margin-top:16px;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(5,11,30,.9);backdrop-filter:blur(12px);z-index:10}.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}.save{background:linear-gradient(90deg,#77e4ff,#d8c6ff);color:#11215b}.reset{background:#2b385e;color:#fff}.export{background:#263f73;color:#fff}.status{margin-left:auto;align-self:center;font-size:12px;color:var(--muted)}.note{margin-top:14px;padding:13px 15px;border:1px solid rgba(255,220,130,.2);background:rgba(255,218,117,.06);border-radius:14px;color:#d8e0ff;font-size:12px;line-height:1.6}
+@media(max-width:960px){.tier-grid{grid-template-columns:repeat(2,1fr)}.prob-wrap{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.panel.full{grid-column:auto}}
+@media(max-width:560px){.tier-grid{grid-template-columns:1fr}.wrap{width:95%;margin-top:16px}.status{width:100%;margin-left:0}.actions{position:static}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div><h1>Bang Bang Card — Admin Panel</h1><p>Atur gambar kartu, hadiah, dan peluang random. Game membaca setting ini dari browser/domain yang sama.</p></div>
+    <div class="badge">CONFIG KEY: bangBangCardConfigV1</div>
+  </div>
+
+  <div class="grid">
+    <section class="panel full">
+      <h2>Gambar Belakang Kartu</h2>
+      <div class="desc">Ini adalah tampilan semua kartu sebelum diklik. Masukkan link gambar PNG/JPG/WebP/GIF milikmu.</div>
+      <div class="field"><label>LINK GAMBAR BELAKANG</label><input id="backImage" type="url" placeholder="https://domain.com/card-back.png"></div>
+    </section>
+
+    <section class="panel full">
+      <h2>5 Jenis Kartu</h2>
+      <div class="desc">Setiap tier bisa memakai gambar sendiri. Kolom hadiah dipakai untuk teks reward pada hasil final.</div>
+      <div id="tierGrid" class="tier-grid"></div>
+    </section>
+
+    <section class="panel full">
+      <h2>Persentase Random</h2>
+      <div class="desc">Masing-masing tahap harus total 100%. Default: ELITE dominan pada kartu awal; SPECIAL dominan pada hasil gabungan/final; EPIC 20%; LEGEND 5%.</div>
+      <div id="probWrap" class="prob-wrap"></div>
+    </section>
+  </div>
+
+  <div class="actions">
+    <button class="btn save" id="saveBtn">SIMPAN & TERAPKAN</button>
+    <button class="btn reset" id="resetBtn">RESET DEFAULT</button>
+    <button class="btn export" id="exportBtn">EXPORT JSON</button>
+    <button class="btn export" id="importBtn">IMPORT JSON</button>
+    <input id="importFile" type="file" accept="application/json" hidden>
+    <div id="status" class="status">Belum ada perubahan.</div>
+  </div>
+
+  <div class="note"><b>Penting:</b> agar panel admin dan game saling membaca setting otomatis, host kedua file pada <b>domain/protocol/port yang sama</b>. Contoh: <code>https://domainmu.com/game.html</code> dan <code>https://domainmu.com/admin.html</code>. Kalau beda domain, perlu API/database backend.</div>
+</div>
+<script>
+const STORAGE_KEY="bangBangCardConfigV1";
+const ORDER=["BASIC","ELITE","SPECIAL","EPIC","LEGEND"];
+const DEFAULT={
+  backImage:"",
+  tiers:{
+    BASIC:{image:"",reward:"Rp 5.000"},
+    ELITE:{image:"",reward:"Rp 10.000"},
+    SPECIAL:{image:"",reward:"Rp 25.000"},
+    EPIC:{image:"",reward:"Rp 50.000"},
+    LEGEND:{image:"",reward:"Rp 100.000"}
+  },
+  weights:{
+    initial:{BASIC:10,ELITE:45,SPECIAL:20,EPIC:20,LEGEND:5},
+    pair:{BASIC:0,ELITE:25,SPECIAL:50,EPIC:20,LEGEND:5},
+    final:{BASIC:0,ELITE:15,SPECIAL:60,EPIC:20,LEGEND:5}
+  }
+};
+const LABELS={initial:"Kartu Dibuka",pair:"Hasil Fusion 2 Kartu",final:"Hasil Final"};
+
+function clone(v){return JSON.parse(JSON.stringify(v))}
+function merge(a,b){
+  const o=clone(a); if(!b||typeof b!=="object") return o;
+  Object.keys(b).forEach(k=>{o[k]=(a[k]&&typeof a[k]==="object"&&!Array.isArray(a[k]))?merge(a[k],b[k]):b[k]});
+  return o;
+}
+function load(){try{return merge(DEFAULT,JSON.parse(localStorage.getItem(STORAGE_KEY)||"null")||{})}catch(e){return clone(DEFAULT)}}
+let config=load();
+
+const tierGrid=document.getElementById("tierGrid");
+const probWrap=document.getElementById("probWrap");
+const statusEl=document.getElementById("status");
+
+function tierCard(name){
+  return `<div class="tier-card">
+    <h3>${name}</h3>
+    <div class="preview"><img id="preview-${name}" src="" alt="${name}"><span id="empty-${name}">PREVIEW</span></div>
+    <div class="field"><label>LINK GAMBAR</label><input class="tier-image" data-tier="${name}" type="url" placeholder="https://.../${name.toLowerCase()}.png"></div>
+    <div class="field"><label>HADIAH / NOMINAL</label><input class="tier-reward" data-tier="${name}" type="text" placeholder="Rp 10.000"></div>
+  </div>`;
+}
+
+function probBox(stage){
+  return `<div class="prob" data-stage="${stage}">
+    <h3>${LABELS[stage]}</h3>
+    <div class="total" id="total-${stage}">TOTAL: 0%</div>
+    ${ORDER.map(name=>`<div class="prob-row"><label>${name}</label><input class="weight" data-stage="${stage}" data-tier="${name}" type="number" min="0" max="100" step="1"></div>`).join("")}
+  </div>`;
+}
+
+tierGrid.innerHTML=ORDER.map(tierCard).join("");
+probWrap.innerHTML=["initial","pair","final"].map(probBox).join("");
+
+function updatePreview(name,url){
+  const img=document.getElementById(`preview-${name}`); const empty=document.getElementById(`empty-${name}`);
+  img.src=url||""; empty.style.display=url?"none":"block";
+}
+function updateTotal(stage){
+  const inputs=[...document.querySelectorAll(`.weight[data-stage="${stage}"]`)];
+  const total=inputs.reduce((s,i)=>s+(Number(i.value)||0),0);
+  const el=document.getElementById(`total-${stage}`);
+  el.textContent=`TOTAL: ${total}%`;
+  el.className="total "+(total===100?"ok":"bad");
+  return total;
+}
+function render(){
+  document.getElementById("backImage").value=config.backImage||"";
+  ORDER.forEach(name=>{
+    const image=document.querySelector(`.tier-image[data-tier="${name}"]`);
+    const reward=document.querySelector(`.tier-reward[data-tier="${name}"]`);
+    image.value=config.tiers[name]?.image||""; reward.value=config.tiers[name]?.reward||"";
+    updatePreview(name,image.value);
+  });
+  ["initial","pair","final"].forEach(stage=>{
+    ORDER.forEach(name=>document.querySelector(`.weight[data-stage="${stage}"][data-tier="${name}"]`).value=Number(config.weights[stage]?.[name]||0));
+    updateTotal(stage);
+  });
+}
+function collect(){
+  const next=clone(DEFAULT); next.backImage=document.getElementById("backImage").value.trim();
+  ORDER.forEach(name=>{
+    next.tiers[name].image=document.querySelector(`.tier-image[data-tier="${name}"]`).value.trim();
+    next.tiers[name].reward=document.querySelector(`.tier-reward[data-tier="${name}"]`).value.trim()||"-";
+  });
+  ["initial","pair","final"].forEach(stage=>ORDER.forEach(name=>next.weights[stage][name]=Math.max(0,Number(document.querySelector(`.weight[data-stage="${stage}"][data-tier="${name}"]`).value)||0)));
+  return next;
+}
+
+document.addEventListener("input",e=>{
+  if(e.target.classList.contains("tier-image")) updatePreview(e.target.dataset.tier,e.target.value.trim());
+  if(e.target.classList.contains("weight")) updateTotal(e.target.dataset.stage);
+  statusEl.textContent="Ada perubahan yang belum disimpan.";
+});
+
+document.getElementById("saveBtn").addEventListener("click",()=>{
+  const totals=["initial","pair","final"].map(updateTotal);
+  if(totals.some(v=>v!==100)){statusEl.textContent="Gagal: semua total persentase harus tepat 100%.";statusEl.style.color="#ff91aa";return}
+  config=collect(); localStorage.setItem(STORAGE_KEY,JSON.stringify(config));
+  statusEl.textContent="Tersimpan. Game akan memakai setting baru pada ronde berikutnya."; statusEl.style.color="#7ff0bb";
+});
+
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  config=clone(DEFAULT); localStorage.setItem(STORAGE_KEY,JSON.stringify(config)); render();
+  statusEl.textContent="Setting dikembalikan ke default.";statusEl.style.color="#7ff0bb";
+});
+
+document.getElementById("exportBtn").addEventListener("click",()=>{
+  const data=collect(); const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="bang-bang-card-config.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);
+});
+
+document.getElementById("importBtn").addEventListener("click",()=>document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change",async e=>{
+  const file=e.target.files[0];if(!file)return;
+  try{config=merge(DEFAULT,JSON.parse(await file.text()));localStorage.setItem(STORAGE_KEY,JSON.stringify(config));render();statusEl.textContent="Config JSON berhasil di-import.";statusEl.style.color="#7ff0bb"}catch(err){statusEl.textContent="File JSON tidak valid.";statusEl.style.color="#ff91aa"}
+  e.target.value="";
+});
+
+render();
+</script>
+</body>
+</html>
