@@ -3,56 +3,427 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>KARTU MISTERY - Admin</title>
+<title>Admin Panel - Kartu Mistery</title>
 <style>
-:root{--bg:#071026;--panel:#101d43;--line:rgba(255,255,255,.13);--muted:#9eb0df;--ok:#7ff0bb;--bad:#ff91aa}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#263f8f 0,transparent 35%),linear-gradient(145deg,#071026,#15194a);color:#fff;font-family:Arial,Helvetica,sans-serif}.wrap{width:min(1220px,94%);margin:28px auto 60px}.head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}.head h1{margin:0;font-size:28px}.head p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.55}.badge{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06);font-size:12px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.stat{padding:16px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid var(--line)}.stat small{display:block;color:var(--muted);font-size:11px;margin-bottom:7px}.stat strong{font-size:24px}.panel{background:linear-gradient(180deg,rgba(18,34,78,.96),rgba(7,14,35,.98));border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 22px 60px rgba(0,0,0,.28);margin-bottom:16px}.panel h2{margin:0 0 5px;font-size:18px}.desc{color:var(--muted);font-size:12px;line-height:1.6;margin-bottom:15px}.field{margin:12px 0}.field label{display:block;font-size:12px;color:#dbe3ff;margin-bottom:7px}.field input,.field select{width:100%;border:1px solid var(--line);background:#07112b;color:#fff;border-radius:12px;padding:12px 13px;outline:none}.member-form{display:grid;grid-template-columns:1.3fr .7fr .7fr 1.3fr auto;gap:10px;align-items:end}.member-form .field{margin:0}.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer}.save{background:linear-gradient(90deg,#77e4ff,#d8c6ff);color:#11215b}.secondary{background:#263f73;color:#fff}.danger{background:#5a2942;color:#ffd4df}.okbtn{background:#1c5b52;color:#d4fff2}.smallbtn{padding:7px 9px;border-radius:9px;font-size:11px}.member-tools{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin:15px 0 10px}.member-tools input{max-width:320px;border:1px solid var(--line);background:#07112b;color:#fff;border-radius:11px;padding:10px 12px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px}table{width:100%;border-collapse:collapse;min-width:980px}th,td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;font-size:12px;vertical-align:middle}th{color:#b9c7ed;background:#0a1533;position:sticky;top:0}td{color:#eef2ff}.muted{color:var(--muted)}.status-pill{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:900;border:1px solid var(--line)}.status-pill.active{color:#bfffe2;background:rgba(72,220,158,.1)}.status-pill.inactive{color:#ffc3d0;background:rgba(255,91,130,.1)}.row-actions{display:flex;gap:6px;flex-wrap:wrap}.reward-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.reward-card{padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}.reward-card h3{margin:0 0 10px;font-size:14px}.prob-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.prob{padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}.prob h3{margin:0 0 4px;font-size:15px}.total{font-size:12px;margin-bottom:10px}.total.ok{color:var(--ok)}.total.bad{color:var(--bad)}.prob-row{display:grid;grid-template-columns:1fr 90px;gap:10px;align-items:center;margin:8px 0}.prob-row label{font-size:12px;color:#dce5ff}.prob-row input{width:100%;border:1px solid var(--line);background:#07112b;color:#fff;border-radius:10px;padding:9px;text-align:center}.actions{display:flex;gap:10px;flex-wrap:wrap;position:sticky;bottom:12px;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(5,11,30,.92);backdrop-filter:blur(12px)}.status-msg{margin-left:auto;align-self:center;font-size:12px;color:var(--muted)}.note{margin-top:14px;padding:13px 15px;border:1px solid rgba(255,220,130,.2);background:rgba(255,218,117,.06);border-radius:14px;color:#d8e0ff;font-size:12px;line-height:1.65}
-@media(max-width:1000px){.member-form{grid-template-columns:1fr 1fr}.reward-grid{grid-template-columns:repeat(2,1fr)}.prob-wrap{grid-template-columns:1fr}}@media(max-width:620px){.wrap{width:95%;margin-top:16px}.stats{grid-template-columns:1fr 1fr}.member-form{grid-template-columns:1fr}.reward-grid{grid-template-columns:1fr}.actions{position:static}.status-msg{width:100%;margin-left:0}}
+:root{
+  --bg:#050b1a;--panel:#0a1330;--panel2:#0e1b3e;--line:rgba(255,255,255,.1);
+  --text:#f7f9ff;--muted:#92a5d8;--cyan:#74e8ff;--violet:#aa8cff;--gold:#ffd86f;
+  --green:#69eba5;--red:#ff7d97;--shadow:0 24px 70px rgba(0,0,0,.42);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,Arial,Helvetica,sans-serif;background:
+ radial-gradient(circle at 20% 0%,rgba(73,180,255,.15),transparent 28%),
+ radial-gradient(circle at 100% 10%,rgba(159,98,255,.18),transparent 25%),
+ linear-gradient(145deg,#040918,#071126 55%,#0a1231);color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{width:min(1440px,100%);margin:auto;padding:18px}
+.shell{border:1px solid var(--line);border-radius:26px;background:rgba(7,14,34,.88);box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(12px)}
+.topbar{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.025)}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:22px;font-weight:1000;color:#0b1741;background:linear-gradient(145deg,#fff2aa,#7fe7ff,#cbb5ff)}
+.brand h1{margin:0;font-size:20px}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.sync{display:flex;gap:8px;align-items:center;color:#b9c6ea;font-size:12px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 14px rgba(105,235,165,.65)}
+.tabs{padding:14px 18px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tab{border:1px solid var(--line);background:rgba(255,255,255,.045);color:#c8d3f4;padding:10px 14px;border-radius:12px;font-weight:800}
+.tab.active{background:linear-gradient(90deg,rgba(116,232,255,.2),rgba(170,140,255,.22));border-color:rgba(116,232,255,.36);color:#fff}
+.content{padding:18px}
+.page{display:none}.page.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.stat{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));padding:16px;border-radius:18px}
+.stat small{display:block;color:var(--muted);font-size:11px;margin-bottom:8px}.stat strong{font-size:25px}.stat span{display:block;color:#bfc9e9;font-size:11px;margin-top:6px}
+.cardpanel{margin-top:14px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,27,62,.88),rgba(7,15,37,.86));border-radius:20px;padding:16px}
+.section-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.section-head h2{font-size:16px;margin:0}.section-head p{margin:4px 0 0;color:var(--muted);font-size:11px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;border-radius:11px;padding:10px 12px;font-weight:850;transition:.15s}
+.btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.09)}
+.btn.primary{background:linear-gradient(90deg,#74e8ff,#bfa9ff);color:#09143e;border:0}
+.btn.green{background:linear-gradient(90deg,#61e9a2,#9cf4c5);color:#092d1c;border:0}
+.btn.danger{background:rgba(255,85,116,.12);border-color:rgba(255,125,151,.25);color:#ffc0cd}
+.input{width:100%;background:#07112a;color:#fff;border:1px solid var(--line);outline:0;padding:11px 12px;border-radius:11px}
+.input:focus{border-color:rgba(116,232,255,.45);box-shadow:0 0 0 3px rgba(116,232,255,.07)}
+.form-grid{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:9px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th,td{padding:12px 11px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);font-size:12px}
+th{font-size:10px;color:#9eb1e5;letter-spacing:.7px;background:rgba(255,255,255,.035);position:sticky;top:0}
+tr:hover td{background:rgba(255,255,255,.018)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;font-size:10px;font-weight:900;border:1px solid var(--line)}
+.badge.on{color:#92f2bb;background:rgba(97,233,162,.08)}.badge.off{color:#ffb1c1;background:rgba(255,85,116,.08)}
+.member-actions{display:flex;gap:6px;flex-wrap:wrap}.mini{padding:7px 9px;font-size:10px}
+.reward-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.reward-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.035);padding:13px}
+.reward-card img{width:100%;aspect-ratio:.748;object-fit:cover;border-radius:13px;border:1px solid rgba(255,255,255,.1);background:#07112b}
+.reward-card h3{margin:10px 0 7px;font-size:14px}.reward-card label{display:block;color:#9eb1e5;font-size:10px;margin:8px 0 5px}
+.quality-ELITE{box-shadow:inset 0 0 28px rgba(90,225,140,.06)}.quality-SPECIAL{box-shadow:inset 0 0 28px rgba(80,160,255,.07)}.quality-EPIC{box-shadow:inset 0 0 28px rgba(195,105,255,.08)}.quality-LEGEND{box-shadow:inset 0 0 30px rgba(255,196,60,.08)}
+.weights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.weightbox{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(255,255,255,.028)}
+.weightbox h3{margin:0 0 5px;font-size:13px}.weightbox p{margin:0 0 10px;color:var(--muted);font-size:10px}.weightrow{display:grid;grid-template-columns:1fr 88px;gap:8px;align-items:center;margin-top:8px}.weightrow label{font-size:11px}.total{margin-top:10px;font-size:10px;color:#b8c5e8}
+.search{max-width:300px}
+.empty{text-align:center;color:#8598ce;padding:30px}
+.toast{position:fixed;right:18px;bottom:18px;max-width:340px;background:#0e1b3e;border:1px solid rgba(116,232,255,.22);box-shadow:0 18px 45px rgba(0,0,0,.42);padding:12px 14px;border-radius:13px;font-size:12px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s;z-index:50}.toast.show{opacity:1;transform:translateY(0)}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(1,4,13,.72);z-index:60}.modal.show{display:flex}
+.modalbox{width:min(480px,100%);border:1px solid var(--line);border-radius:20px;padding:18px;background:#0a1432;box-shadow:var(--shadow)}
+.modalbox h3{margin:0 0 6px}.modalbox p{margin:0 0 14px;color:var(--muted);font-size:11px}.modalrow{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+footer{text-align:center;color:#6679ad;font-size:10px;padding:14px 18px 19px}
+@media(max-width:1050px){.grid,.reward-grid{grid-template-columns:repeat(2,1fr)}.weights{grid-template-columns:1fr}}
+@media(max-width:700px){.app{padding:8px}.shell{border-radius:19px}.topbar{align-items:flex-start}.sync{display:none}.content{padding:11px}.grid,.reward-grid{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr 1fr}.form-grid .wide{grid-column:1/-1}.form-grid button{width:100%}.section-head{align-items:flex-start}.modalrow{grid-template-columns:1fr}}
+@media(max-width:430px){.grid{grid-template-columns:1fr 1fr}.reward-grid{grid-template-columns:1fr}.stat strong{font-size:20px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="head"><div><h1>KARTU MISTERY — ADMIN PANEL</h1><p>Kelola username, kesempatan bermain, hadiah, dan peluang random. Gambar kartu tidak diatur di sini karena sudah tersedia di folder assets game.</p></div><div class="badge">ADMIN TERPISAH</div></div>
-  <div class="stats"><div class="stat"><small>TOTAL MEMBER</small><strong id="statMembers">0</strong></div><div class="stat"><small>MEMBER AKTIF</small><strong id="statActive">0</strong></div><div class="stat"><small>TOTAL KESEMPATAN</small><strong id="statTickets">0</strong></div><div class="stat"><small>TOTAL FINAL</small><strong id="statFinals">0</strong></div></div>
-  <section class="panel">
-    <h2>Kelola Member</h2><div class="desc">Username hanya dapat login ke game jika sudah dibuat di sini, status AKTIF, dan mempunyai kesempatan bermain.</div>
-    <div class="member-form"><div class="field"><label>USERNAME / ID MEMBER</label><input id="memberUsername" type="text" placeholder="USERNAME"></div><div class="field"><label>KESEMPATAN</label><input id="memberTickets" type="number" min="0" value="1"></div><div class="field"><label>STATUS</label><select id="memberActive"><option value="true">AKTIF</option><option value="false">NONAKTIF</option></select></div><div class="field"><label>CATATAN</label><input id="memberNote" type="text" placeholder="catatan admin"></div><button id="saveMemberBtn" class="btn save">SIMPAN MEMBER</button></div>
-    <div class="member-tools"><input id="memberSearch" type="text" placeholder="Cari username..."><button id="clearMemberFormBtn" class="btn secondary">RESET FORM</button></div>
-    <div class="table-wrap"><table><thead><tr><th>USERNAME</th><th>STATUS</th><th>KESEMPATAN</th><th>RONDE</th><th>FINAL</th><th>HASIL TERAKHIR</th><th>HADIAH TERAKHIR</th><th>AKTIF TERAKHIR</th><th>CATATAN</th><th>AKSI</th></tr></thead><tbody id="memberTable"></tbody></table></div>
-  </section>
-  <section class="panel"><h2>Hadiah 4 Jenis Kartu</h2><div class="desc">Tidak ada input link gambar. Admin hanya mengubah nominal hadiah yang tercatat pada hasil final.</div><div id="rewardGrid" class="reward-grid"></div></section>
-  <section class="panel"><h2>Persentase Random</h2><div class="desc">Total setiap tahap wajib 100%. ELITE dibuat dominan pada kartu awal, SPECIAL dominan pada final, EPICK 20%, LEGEND 5% secara default.</div><div id="probWrap" class="prob-wrap"></div></section>
-  <div class="actions"><button id="saveConfigBtn" class="btn save">SIMPAN & TERAPKAN</button><button id="resetConfigBtn" class="btn secondary">RESET DEFAULT</button><button id="exportBtn" class="btn secondary">EXPORT BACKUP</button><button id="importBtn" class="btn secondary">IMPORT BACKUP</button><input id="importFile" type="file" accept="application/json" hidden><div id="statusMsg" class="status-msg">Belum ada perubahan.</div></div>
-  <div class="note"><b>Agar Game dan Admin tersambung tanpa API:</b> buka keduanya dari origin yang sama, misalnya <code>http://localhost:5500/game.html</code> dan <code>http://localhost:5500/admin.html</code>, atau upload keduanya ke domain yang sama. Jangan mengandalkan dua file <code>file://</code> terpisah karena penyimpanan browser bisa dipisahkan.</div>
+<div class="app">
+<div class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">✦</div>
+      <div><h1>KARTU MISTERY — ADMIN</h1><p>Kelola member, kesempatan, reward, dan peluang kartu.</p></div>
+    </div>
+    <div class="sync"><span class="dot"></span><span>LOCAL SYNC ACTIVE</span></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="dashboard">Dashboard</button>
+    <button class="tab" data-tab="members">Member & Tiket</button>
+    <button class="tab" data-tab="rewards">Reward & Kartu</button>
+    <button class="tab" data-tab="probability">Persentase</button>
+    <button class="tab" data-tab="backup">Backup</button>
+  </div>
+
+  <div class="content">
+    <section id="dashboard" class="page active">
+      <div class="grid">
+        <div class="stat"><small>TOTAL MEMBER</small><strong id="statMembers">0</strong><span>Semua ID yang terdaftar</span></div>
+        <div class="stat"><small>MEMBER AKTIF</small><strong id="statActive">0</strong><span>ID yang bisa login</span></div>
+        <div class="stat"><small>SISA TIKET</small><strong id="statTickets">0</strong><span>Total tiket seluruh member</span></div>
+        <div class="stat"><small>RONDE SELESAI</small><strong id="statRounds">0</strong><span>Total final fusion</span></div>
+      </div>
+      <div class="cardpanel">
+        <div class="section-head"><div><h2>Aktivitas Terbaru</h2><p>Ringkasan hasil terakhir dari member.</p></div></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>MEMBER</th><th>STATUS</th><th>TIKET</th><th>RONDE</th><th>HASIL TERAKHIR</th><th>REWARD</th><th>UPDATE</th></tr></thead>
+          <tbody id="recentBody"></tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <section id="members" class="page">
+      <div class="cardpanel" style="margin-top:0">
+        <div class="section-head">
+          <div><h2>Tambah Member</h2><p>Username otomatis dibuat uppercase tanpa spasi.</p></div>
+        </div>
+        <div class="form-grid">
+          <input id="newId" class="input wide" placeholder="USERNAME / ID MEMBER">
+          <input id="newTickets" class="input" type="number" min="0" value="1" placeholder="Tiket">
+          <select id="newActive" class="input"><option value="1">Aktif</option><option value="0">Nonaktif</option></select>
+          <button id="addMemberBtn" class="btn primary">+ TAMBAH MEMBER</button>
+        </div>
+      </div>
+
+      <div class="cardpanel">
+        <div class="section-head">
+          <div><h2>Daftar Member</h2><p>Set tiket, tambah tiket, aktif/nonaktif, dan hapus member.</p></div>
+          <input id="memberSearch" class="input search" placeholder="Cari username...">
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>USERNAME</th><th>STATUS</th><th>SISA TIKET</th><th>RONDE</th><th>LAST TIER</th><th>LAST REWARD</th><th>AKSI</th></tr></thead>
+          <tbody id="memberBody"></tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <section id="rewards" class="page">
+      <div class="cardpanel" style="margin-top:0">
+        <div class="section-head">
+          <div><h2>Reward & Preview Kartu</h2><p>Gambar berikut memakai link produksi yang sama dengan game.</p></div>
+          <button id="saveRewardsBtn" class="btn green">SIMPAN REWARD</button>
+        </div>
+        <div id="rewardGrid" class="reward-grid"></div>
+      </div>
+    </section>
+
+    <section id="probability" class="page">
+      <div class="cardpanel" style="margin-top:0">
+        <div class="section-head">
+          <div><h2>Persentase / Bobot Kartu</h2><p>Bobot tidak wajib berjumlah 100. Sistem menghitung proporsional otomatis.</p></div>
+          <button id="saveWeightsBtn" class="btn green">SIMPAN PERSENTASE</button>
+        </div>
+        <div id="weightsGrid" class="weights"></div>
+      </div>
+    </section>
+
+    <section id="backup" class="page">
+      <div class="cardpanel" style="margin-top:0">
+        <div class="section-head"><div><h2>Backup & Restore</h2><p>Simpan konfigurasi + seluruh member ke satu file JSON.</p></div></div>
+        <div class="actions">
+          <button id="exportBtn" class="btn primary">DOWNLOAD BACKUP JSON</button>
+          <button id="importBtn" class="btn">IMPORT BACKUP</button>
+          <input id="importFile" type="file" accept="application/json,.json" hidden>
+          <button id="resetConfigBtn" class="btn danger">RESET CONFIG</button>
+          <button id="clearMembersBtn" class="btn danger">HAPUS SEMUA MEMBER</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer>Admin Panel Kartu Mistery • Data tersimpan di browser menggunakan localStorage.</footer>
 </div>
+</div>
+
+<div id="editModal" class="modal">
+  <div class="modalbox">
+    <h3 id="modalTitle">Edit Member</h3>
+    <p>Ubah jumlah tiket atau status member.</p>
+    <label style="font-size:10px;color:#9eb1e5">JUMLAH TIKET</label>
+    <input id="modalTickets" class="input" type="number" min="0">
+    <div class="modalrow">
+      <button id="modalSetBtn" class="btn primary">SET TIKET</button>
+      <button id="modalAddBtn" class="btn green">+ TAMBAH TIKET</button>
+    </div>
+    <div class="modalrow">
+      <button id="modalToggleBtn" class="btn">AKTIF/NONAKTIF</button>
+      <button id="modalCloseBtn" class="btn">TUTUP</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
 <script>
 const STORAGE_KEY="kartuMisteryFixedConfigV1";
 const MEMBER_STORAGE_KEY="kartuMisteryFixedMembersV1";
 const CHANNEL_NAME="kartuMisteryFixedSyncV1";
+
 const ORDER=["ELITE","SPECIAL","EPIC","LEGEND"];
-const DISPLAY={ELITE:"ELITE",SPECIAL:"SPECIAL",EPIC:"EPICK",LEGEND:"LEGEND"};
-const DEFAULT_CONFIG={rewards:{ELITE:"Rp 10.000",SPECIAL:"Rp 25.000",EPIC:"Rp 50.000",LEGEND:"Rp 100.000"},weights:{initial:{ELITE:50,SPECIAL:25,EPIC:20,LEGEND:5},pair:{ELITE:25,SPECIAL:50,EPIC:20,LEGEND:5},final:{ELITE:15,SPECIAL:60,EPIC:20,LEGEND:5}}};
-const LABELS={initial:"Kartu Dibuka",pair:"Hasil Fusion 2 Kartu",final:"Hasil Final"};
-function clone(v){return JSON.parse(JSON.stringify(v))}function nowISO(){return new Date().toISOString()}function esc(v){return String(v??"").replace(/[&<>\"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}function formatTime(v){if(!v)return"-";const d=new Date(v);return isNaN(d)?"-":d.toLocaleString("id-ID")}
-function loadConfig(){try{const raw=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");const cfg=clone(DEFAULT_CONFIG);if(raw?.rewards)ORDER.forEach(k=>{if(typeof raw.rewards[k]==="string")cfg.rewards[k]=raw.rewards[k]});if(raw?.weights)["initial","pair","final"].forEach(s=>ORDER.forEach(k=>{const n=Number(raw.weights?.[s]?.[k]);if(Number.isFinite(n)&&n>=0)cfg.weights[s][k]=n}));return cfg}catch(e){return clone(DEFAULT_CONFIG)}}
-function saveConfig(v){localStorage.setItem(STORAGE_KEY,JSON.stringify(v))}function loadMembers(){try{return JSON.parse(localStorage.getItem(MEMBER_STORAGE_KEY)||"{}")||{}}catch(e){return{}}}function saveMembers(v){localStorage.setItem(MEMBER_STORAGE_KEY,JSON.stringify(v));announce("MEMBERS")}
-let bc=null;try{bc=new BroadcastChannel(CHANNEL_NAME)}catch(e){}function announce(type){if(bc)bc.postMessage({type})}
-const rewardGrid=document.getElementById("rewardGrid"),probWrap=document.getElementById("probWrap"),statusMsg=document.getElementById("statusMsg");let editingId=null;
-function message(t,kind=""){statusMsg.textContent=t;statusMsg.style.color=kind==="ok"?"#7ff0bb":kind==="bad"?"#ff91aa":"#9eb0df"}
-function updateStats(){const members=loadMembers(),ids=Object.keys(members);let active=0,tickets=0,finals=0;ids.forEach(id=>{const m=members[id]||{};if(m.active!==false)active++;tickets+=Math.max(0,Number(m.tickets)||0);finals+=Number(m.finalCount)||0});document.getElementById("statMembers").textContent=ids.length;document.getElementById("statActive").textContent=active;document.getElementById("statTickets").textContent=tickets;document.getElementById("statFinals").textContent=finals}
-function clearForm(){editingId=null;memberUsername.value="";memberUsername.disabled=false;memberTickets.value="1";memberActive.value="true";memberNote.value="";saveMemberBtn.textContent="SIMPAN MEMBER"}
-function renderMembers(){const members=loadMembers(),q=memberSearch.value.trim().toUpperCase();const rows=Object.keys(members).sort().filter(id=>!q||id.includes(q)).map(id=>{const m=members[id]||{},active=m.active!==false;return `<tr><td><strong>${esc(id)}</strong></td><td><span class="status-pill ${active?"active":"inactive"}">${active?"AKTIF":"NONAKTIF"}</span></td><td>${Math.max(0,Number(m.tickets)||0)}</td><td>${Number(m.rounds)||0}</td><td>${Number(m.finalCount)||0}</td><td>${esc(m.lastTier||"-")}</td><td>${esc(m.lastReward||"-")}</td><td>${esc(formatTime(m.lastActive))}</td><td class="muted">${esc(m.note||"-")}</td><td><div class="row-actions"><button class="btn secondary smallbtn" data-action="edit" data-id="${esc(id)}">EDIT</button><button class="btn okbtn smallbtn" data-action="plus" data-id="${esc(id)}">+1</button><button class="btn secondary smallbtn" data-action="minus" data-id="${esc(id)}">-1</button><button class="btn secondary smallbtn" data-action="toggle" data-id="${esc(id)}">${active?"NONAKTIFKAN":"AKTIFKAN"}</button><button class="btn danger smallbtn" data-action="delete" data-id="${esc(id)}">HAPUS</button></div></td></tr>`}).join("");memberTable.innerHTML=rows||'<tr><td colspan="10" class="muted">Belum ada member.</td></tr>';updateStats()}
-function updateTotal(stage){const inputs=[...document.querySelectorAll(`.weight[data-stage="${stage}"]`)];const total=inputs.reduce((s,i)=>s+(Number(i.value)||0),0);const el=document.getElementById(`total-${stage}`);el.textContent=`TOTAL: ${total}%`;el.className="total "+(total===100?"ok":"bad");return total}
-function renderConfig(){const cfg=loadConfig();rewardGrid.innerHTML=ORDER.map(k=>`<div class="reward-card"><h3>${DISPLAY[k]}</h3><div class="field"><label>HADIAH / NOMINAL</label><input class="reward-input" data-tier="${k}" value="${esc(cfg.rewards[k])}"></div></div>`).join("");probWrap.innerHTML=["initial","pair","final"].map(stage=>`<div class="prob"><h3>${LABELS[stage]}</h3><div id="total-${stage}" class="total">TOTAL: 0%</div>${ORDER.map(k=>`<div class="prob-row"><label>${DISPLAY[k]}</label><input class="weight" data-stage="${stage}" data-tier="${k}" type="number" min="0" max="100" value="${cfg.weights[stage][k]}"></div>`).join("")}</div>`).join("");["initial","pair","final"].forEach(updateTotal)}
-function collectConfig(){const cfg=clone(DEFAULT_CONFIG);ORDER.forEach(k=>{cfg.rewards[k]=document.querySelector(`.reward-input[data-tier="${k}"]`).value.trim()||"-"});["initial","pair","final"].forEach(stage=>ORDER.forEach(k=>{cfg.weights[stage][k]=Math.max(0,Number(document.querySelector(`.weight[data-stage="${stage}"][data-tier="${k}"]`).value)||0)}));return cfg}
-const memberUsername=document.getElementById("memberUsername"),memberTickets=document.getElementById("memberTickets"),memberActive=document.getElementById("memberActive"),memberNote=document.getElementById("memberNote"),saveMemberBtn=document.getElementById("saveMemberBtn"),memberSearch=document.getElementById("memberSearch"),memberTable=document.getElementById("memberTable");
-saveMemberBtn.addEventListener("click",()=>{const id=memberUsername.value.trim().toUpperCase().replace(/\s+/g,"");if(!id){message("Username wajib diisi.","bad");return}const members=loadMembers(),old=members[id]||{};members[id]={tickets:Math.max(0,Math.floor(Number(memberTickets.value)||0)),active:memberActive.value==="true",note:memberNote.value.trim(),rounds:Number(old.rounds)||0,finalCount:Number(old.finalCount)||0,lastTier:old.lastTier||"",lastReward:old.lastReward||"",lastActive:old.lastActive||"",createdAt:old.createdAt||nowISO(),updatedAt:nowISO()};saveMembers(members);message(editingId?`Data ${id} diperbarui.`:`Username ${id} dibuat.`,"ok");clearForm();renderMembers()});
-clearMemberFormBtn.addEventListener("click",()=>{clearForm();message("Form direset.")});memberSearch.addEventListener("input",renderMembers);
-memberTable.addEventListener("click",e=>{const btn=e.target.closest("button[data-action]");if(!btn)return;const id=btn.dataset.id,action=btn.dataset.action,members=loadMembers(),m=members[id];if(!m)return;if(action==="edit"){editingId=id;memberUsername.value=id;memberUsername.disabled=true;memberTickets.value=Math.max(0,Number(m.tickets)||0);memberActive.value=m.active===false?"false":"true";memberNote.value=m.note||"";saveMemberBtn.textContent="UPDATE MEMBER";message(`Sedang edit ${id}.`);return}if(action==="plus")m.tickets=Math.max(0,Number(m.tickets)||0)+1;if(action==="minus")m.tickets=Math.max(0,(Number(m.tickets)||0)-1);if(action==="toggle")m.active=m.active===false;if(action==="delete"){if(!confirm(`Hapus ${id}?`))return;delete members[id]}else m.updatedAt=nowISO();saveMembers(members);renderMembers();message(`Data ${id} diperbarui.`,"ok")});
-document.addEventListener("input",e=>{if(e.target.classList.contains("weight"))updateTotal(e.target.dataset.stage);if(e.target.classList.contains("weight")||e.target.classList.contains("reward-input"))message("Ada perubahan yang belum disimpan.")});
-saveConfigBtn.addEventListener("click",()=>{const totals=["initial","pair","final"].map(updateTotal);if(totals.some(v=>v!==100)){message("Semua total persentase harus tepat 100%.","bad");return}saveConfig(collectConfig());announce("CONFIG");message("Pengaturan tersimpan dan dikirim ke Game.","ok")});resetConfigBtn.addEventListener("click",()=>{if(!confirm("Reset hadiah dan persentase ke default?"))return;saveConfig(clone(DEFAULT_CONFIG));announce("CONFIG");renderConfig();message("Pengaturan direset.","ok")});
-exportBtn.addEventListener("click",()=>{const data={config:collectConfig(),members:loadMembers(),exportedAt:nowISO()};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="kartu-mistery-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)});importBtn.addEventListener("click",()=>importFile.click());importFile.addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;try{const d=JSON.parse(await file.text());if(d.config)saveConfig(d.config);if(d.members)saveMembers(d.members);announce("CONFIG");renderConfig();renderMembers();message("Backup berhasil di-import.","ok")}catch(err){message("File backup tidak valid.","bad")}e.target.value=""});
-renderConfig();renderMembers();
+const META={
+  ELITE:{name:"ELITE",display:"ELITE",image:"https://plcl.me/images/pVJn3.png"},
+  SPECIAL:{name:"SPECIAL",display:"SPECIAL",image:"https://plcl.me/images/sUpsf.png"},
+  EPIC:{name:"EPIC",display:"EPICK",image:"https://plcl.me/images/kRKYL.png"},
+  LEGEND:{name:"LEGEND",display:"LEGEND",image:"https://plcl.me/images/AQshJ.png"}
+};
+const DEFAULT_CONFIG={
+  rewards:{ELITE:"Rp 10.000",SPECIAL:"Rp 25.000",EPIC:"Rp 50.000",LEGEND:"Rp 100.000"},
+  weights:{
+    initial:{ELITE:50,SPECIAL:25,EPIC:20,LEGEND:5},
+    pair:{ELITE:25,SPECIAL:50,EPIC:20,LEGEND:5},
+    final:{ELITE:15,SPECIAL:60,EPIC:20,LEGEND:5}
+  }
+};
+function clone(v){return JSON.parse(JSON.stringify(v))}
+function loadMembers(){try{return JSON.parse(localStorage.getItem(MEMBER_STORAGE_KEY)||"{}")||{}}catch(e){return {}}}
+function saveMembers(v){localStorage.setItem(MEMBER_STORAGE_KEY,JSON.stringify(v));notify("MEMBERS")}
+function loadConfig(){
+  try{
+    const raw=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
+    const cfg=clone(DEFAULT_CONFIG);
+    if(raw?.rewards)ORDER.forEach(k=>{if(typeof raw.rewards[k]==="string")cfg.rewards[k]=raw.rewards[k]});
+    if(raw?.weights)["initial","pair","final"].forEach(s=>ORDER.forEach(k=>{
+      const n=Number(raw.weights?.[s]?.[k]);if(Number.isFinite(n)&&n>=0)cfg.weights[s][k]=n;
+    }));
+    return cfg;
+  }catch(e){return clone(DEFAULT_CONFIG)}
+}
+function saveConfig(cfg){localStorage.setItem(STORAGE_KEY,JSON.stringify(cfg));notify("CONFIG")}
+function nowISO(){return new Date().toISOString()}
+let bc=null;try{bc=new BroadcastChannel(CHANNEL_NAME)}catch(e){}
+function notify(type){
+  try{if(bc)bc.postMessage({type,at:Date.now()})}catch(e){}
+  renderAll();
+}
+function fmtDate(v){
+  if(!v)return "-";
+  const d=new Date(v);if(Number.isNaN(d.getTime()))return "-";
+  return d.toLocaleString("id-ID",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+}
+function cleanId(v){return String(v||"").trim().toUpperCase().replace(/\s+/g,"")}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function toast(msg){
+  const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");
+  clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),2200);
+}
+
+const tabs=[...document.querySelectorAll(".tab")];
+tabs.forEach(btn=>btn.onclick=()=>{
+  tabs.forEach(x=>x.classList.remove("active"));btn.classList.add("active");
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(btn.dataset.tab).classList.add("active");
+});
+
+function renderStats(){
+  const members=loadMembers(),arr=Object.entries(members);
+  document.getElementById("statMembers").textContent=arr.length;
+  document.getElementById("statActive").textContent=arr.filter(([_,m])=>m.active!==false).length;
+  document.getElementById("statTickets").textContent=arr.reduce((s,[_,m])=>s+Math.max(0,Number(m.tickets)||0),0);
+  document.getElementById("statRounds").textContent=arr.reduce((s,[_,m])=>s+Math.max(0,Number(m.rounds)||0),0);
+
+  const recent=arr.sort((a,b)=>new Date(b[1].updatedAt||b[1].lastActive||0)-new Date(a[1].updatedAt||a[1].lastActive||0)).slice(0,12);
+  const body=document.getElementById("recentBody");
+  body.innerHTML=recent.length?recent.map(([id,m])=>`<tr>
+    <td><b>${escapeHtml(id)}</b></td>
+    <td><span class="badge ${m.active===false?"off":"on"}">${m.active===false?"NONAKTIF":"AKTIF"}</span></td>
+    <td>${Math.max(0,Number(m.tickets)||0)}</td>
+    <td>${Math.max(0,Number(m.rounds)||0)}</td>
+    <td>${escapeHtml(m.lastTier||"-")}</td>
+    <td>${escapeHtml(m.lastReward||"-")}</td>
+    <td>${fmtDate(m.updatedAt||m.lastActive)}</td>
+  </tr>`).join(""):`<tr><td colspan="7" class="empty">Belum ada data member.</td></tr>`;
+}
+
+let currentEditId=null;
+function renderMembers(){
+  const q=document.getElementById("memberSearch").value.trim().toUpperCase();
+  const members=loadMembers();
+  const rows=Object.entries(members).filter(([id])=>id.includes(q)).sort((a,b)=>a[0].localeCompare(b[0]));
+  document.getElementById("memberBody").innerHTML=rows.length?rows.map(([id,m])=>`<tr>
+    <td><b>${escapeHtml(id)}</b></td>
+    <td><span class="badge ${m.active===false?"off":"on"}">${m.active===false?"NONAKTIF":"AKTIF"}</span></td>
+    <td><b>${Math.max(0,Number(m.tickets)||0)}</b></td>
+    <td>${Math.max(0,Number(m.rounds)||0)}</td>
+    <td>${escapeHtml(m.lastTier||"-")}</td>
+    <td>${escapeHtml(m.lastReward||"-")}</td>
+    <td><div class="member-actions">
+      <button class="btn mini" onclick="openEdit('${encodeURIComponent(id)}')">EDIT</button>
+      <button class="btn mini green" onclick="quickAdd('${encodeURIComponent(id)}',1)">+1</button>
+      <button class="btn mini green" onclick="quickAdd('${encodeURIComponent(id)}',5)">+5</button>
+      <button class="btn mini danger" onclick="removeMember('${encodeURIComponent(id)}')">HAPUS</button>
+    </div></td>
+  </tr>`).join(""):`<tr><td colspan="7" class="empty">Member tidak ditemukan.</td></tr>`;
+}
+
+function renderRewards(){
+  const cfg=loadConfig();
+  document.getElementById("rewardGrid").innerHTML=ORDER.map(k=>`<div class="reward-card quality-${k}">
+    <img src="${META[k].image}" alt="${META[k].display}" onerror="this.style.opacity='.25'">
+    <h3>${META[k].display}</h3>
+    <label>REWARD / NOMINAL</label>
+    <input class="input reward-input" data-key="${k}" value="${escapeHtml(cfg.rewards[k])}">
+  </div>`).join("");
+}
+
+function renderWeights(){
+  const cfg=loadConfig();
+  const stageInfo={
+    initial:["Kartu Awal","Peluang saat 4 kartu pertama dibuka."],
+    pair:["Fusion Pair","Peluang hasil penggabungan 2 kartu."],
+    final:["Final Fusion","Peluang kartu reward terakhir."]
+  };
+  document.getElementById("weightsGrid").innerHTML=["initial","pair","final"].map(stage=>{
+    const rows=ORDER.map(k=>`<div class="weightrow"><label>${META[k].display}</label>
+      <input class="input weight-input" data-stage="${stage}" data-key="${k}" type="number" min="0" step="1" value="${Number(cfg.weights[stage][k])||0}">
+    </div>`).join("");
+    const total=ORDER.reduce((s,k)=>s+(Number(cfg.weights[stage][k])||0),0);
+    return `<div class="weightbox"><h3>${stageInfo[stage][0]}</h3><p>${stageInfo[stage][1]}</p>${rows}<div class="total">TOTAL BOBOT: <b id="total-${stage}">${total}</b></div></div>`;
+  }).join("");
+  document.querySelectorAll(".weight-input").forEach(i=>i.addEventListener("input",updateWeightTotals));
+}
+function updateWeightTotals(){
+  ["initial","pair","final"].forEach(stage=>{
+    let t=0;document.querySelectorAll(`.weight-input[data-stage="${stage}"]`).forEach(i=>t+=Math.max(0,Number(i.value)||0));
+    const el=document.getElementById(`total-${stage}`);if(el)el.textContent=t;
+  });
+}
+
+function renderAll(){renderStats();renderMembers()}
+renderRewards();renderWeights();renderAll();
+
+document.getElementById("memberSearch").addEventListener("input",renderMembers);
+document.getElementById("addMemberBtn").onclick=()=>{
+  const id=cleanId(document.getElementById("newId").value);
+  const t=Math.max(0,Number(document.getElementById("newTickets").value)||0);
+  const active=document.getElementById("newActive").value==="1";
+  if(!id){toast("Masukkan username terlebih dahulu.");return}
+  const members=loadMembers();
+  if(members[id]){toast("Username sudah terdaftar.");return}
+  members[id]={tickets:t,active,rounds:0,finalCount:0,lastTier:"",lastReward:"",createdAt:nowISO(),updatedAt:nowISO()};
+  saveMembers(members);
+  document.getElementById("newId").value="";
+  toast(`Member ${id} berhasil ditambahkan.`);
+};
+
+window.openEdit=(encoded)=>{
+  const id=decodeURIComponent(encoded),m=loadMembers()[id];if(!m)return;
+  currentEditId=id;
+  document.getElementById("modalTitle").textContent=`EDIT MEMBER — ${id}`;
+  document.getElementById("modalTickets").value=Math.max(0,Number(m.tickets)||0);
+  document.getElementById("modalToggleBtn").textContent=m.active===false?"AKTIFKAN MEMBER":"NONAKTIFKAN MEMBER";
+  document.getElementById("editModal").classList.add("show");
+};
+window.quickAdd=(encoded,n)=>{
+  const id=decodeURIComponent(encoded),members=loadMembers();if(!members[id])return;
+  members[id].tickets=Math.max(0,Number(members[id].tickets)||0)+n;members[id].updatedAt=nowISO();saveMembers(members);
+  toast(`+${n} tiket untuk ${id}.`);
+};
+window.removeMember=(encoded)=>{
+  const id=decodeURIComponent(encoded);
+  if(!confirm(`Hapus member ${id}?`))return;
+  const members=loadMembers();delete members[id];saveMembers(members);toast(`Member ${id} dihapus.`);
+};
+document.getElementById("modalCloseBtn").onclick=()=>document.getElementById("editModal").classList.remove("show");
+document.getElementById("editModal").onclick=e=>{if(e.target.id==="editModal")e.currentTarget.classList.remove("show")};
+document.getElementById("modalSetBtn").onclick=()=>{
+  if(!currentEditId)return;const members=loadMembers(),m=members[currentEditId];if(!m)return;
+  m.tickets=Math.max(0,Number(document.getElementById("modalTickets").value)||0);m.updatedAt=nowISO();saveMembers(members);
+  document.getElementById("editModal").classList.remove("show");toast("Jumlah tiket diperbarui.");
+};
+document.getElementById("modalAddBtn").onclick=()=>{
+  if(!currentEditId)return;const members=loadMembers(),m=members[currentEditId];if(!m)return;
+  const add=Math.max(0,Number(document.getElementById("modalTickets").value)||0);
+  m.tickets=Math.max(0,Number(m.tickets)||0)+add;m.updatedAt=nowISO();saveMembers(members);
+  document.getElementById("editModal").classList.remove("show");toast(`${add} tiket ditambahkan.`);
+};
+document.getElementById("modalToggleBtn").onclick=()=>{
+  if(!currentEditId)return;const members=loadMembers(),m=members[currentEditId];if(!m)return;
+  m.active=m.active===false?true:false;m.updatedAt=nowISO();saveMembers(members);
+  document.getElementById("editModal").classList.remove("show");toast(`Status ${currentEditId} diperbarui.`);
+};
+
+document.getElementById("saveRewardsBtn").onclick=()=>{
+  const cfg=loadConfig();
+  document.querySelectorAll(".reward-input").forEach(i=>cfg.rewards[i.dataset.key]=i.value.trim()||"-");
+  saveConfig(cfg);toast("Reward berhasil disimpan.");
+};
+document.getElementById("saveWeightsBtn").onclick=()=>{
+  const cfg=loadConfig();
+  document.querySelectorAll(".weight-input").forEach(i=>cfg.weights[i.dataset.stage][i.dataset.key]=Math.max(0,Number(i.value)||0));
+  saveConfig(cfg);toast("Persentase berhasil disimpan.");
+};
+
+document.getElementById("exportBtn").onclick=()=>{
+  const payload={version:1,exportedAt:nowISO(),config:loadConfig(),members:loadMembers()};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download=`kartu-mistery-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);
+  toast("Backup berhasil dibuat.");
+};
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").onchange=async e=>{
+  const file=e.target.files?.[0];if(!file)return;
+  try{
+    const data=JSON.parse(await file.text());
+    if(data.config)saveConfig(data.config);
+    if(data.members&&typeof data.members==="object")saveMembers(data.members);
+    renderRewards();renderWeights();renderAll();toast("Backup berhasil di-import.");
+  }catch(err){toast("File backup tidak valid.");}
+  e.target.value="";
+};
+document.getElementById("resetConfigBtn").onclick=()=>{
+  if(!confirm("Reset reward dan persentase ke default?"))return;
+  saveConfig(clone(DEFAULT_CONFIG));renderRewards();renderWeights();toast("Config dikembalikan ke default.");
+};
+document.getElementById("clearMembersBtn").onclick=()=>{
+  if(!confirm("Hapus SEMUA member? Tindakan ini tidak bisa dibatalkan."))return;
+  localStorage.removeItem(MEMBER_STORAGE_KEY);notify("MEMBERS");toast("Semua member telah dihapus.");
+};
+
+window.addEventListener("storage",e=>{
+  if(e.key===MEMBER_STORAGE_KEY)renderAll();
+  if(e.key===STORAGE_KEY){renderRewards();renderWeights();}
+});
+if(bc)bc.onmessage=e=>{
+  if(e.data?.type==="MEMBERS")renderAll();
+  if(e.data?.type==="CONFIG"){renderRewards();renderWeights();}
+};
 </script>
 </body>
 </html>
